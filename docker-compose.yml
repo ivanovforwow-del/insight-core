@@ -1,0 +1,276 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgis/postgis:15-3.4
+    container_name: insightcore_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-insightcore}
+      POSTGRES_USER: ${POSTGRES_USER:-insightcore_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-insightcore_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - insightcore_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-insightcore_user} -d ${POSTGRES_DB:-insightcore}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: insightcore_redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - insightcore_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: insightcore_zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - insightcore_network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: insightcore_kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - insightcore_network
+
+  minio:
+    image: minio/minio:RELEASE.2024-03-07T0-43-27Z
+    container_name: insightcore_minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY:-minioadmin}
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - insightcore_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  minio-init:
+    image: minio/mc:RELEASE.2024-03-07T00-43-27Z
+    depends_on:
+      - minio
+    command: >
+      /bin/sh -c "
+        sleep 10 &&
+        mc alias set minio http://minio:9000 ${MINIO_ACCESS_KEY:-minioadmin} ${MINIO_SECRET_KEY:-minioadmin} &&
+        mc mb minio/insightcore-videos --ignore-existing &&
+        mc mb minio/insightcore-models --ignore-existing &&
+        mc mb minio/insightcore-logs --ignore-existing &&
+        mc anonymous set public minio/insightcore-videos
+      "
+    networks:
+      - insightcore_network
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-minioadmin}
+
+  prometheus:
+    image: prom/prometheus:v2.49.0
+    container_name: insightcore_prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    networks:
+      - insightcore_network
+    depends_on:
+      - backend
+
+  grafana:
+    image: grafana/grafana-enterprise:10.4.1
+    container_name: insightcore_grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/datasources:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3000:3000"
+    networks:
+      - insightcore_network
+    depends_on:
+      - prometheus
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: insightcore_backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_SECURE=false
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - DEBUG=${DJANGO_DEBUG:-False}
+    ports:
+      - "800:8000"
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    networks:
+      - insightcore_network
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn core.wsgi:application --bind 0.0.0:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: insightcore_frontend
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=${FRONTEND_API_URL:-http://localhost:8000}
+      - REACT_APP_WS_URL=${FRONTEND_WS_URL:-ws://localhost:8000}
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+    networks:
+      - insightcore_network
+    stdin_open: true
+    tty: true
+
+  analyzer:
+    build:
+      context: ./analyzer
+      dockerfile: Dockerfile
+    container_name: insightcore_analyzer
+    depends_on:
+      - kafka
+      - db
+      - redis
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_SECURE=false
+    volumes:
+      - ./analyzer:/app
+      - models_volume:/app/models
+    networks:
+      - insightcore_network
+    command: python analyzer_service.py
+
+  celery:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: insightcore_celery
+    depends_on:
+      - redis
+      - db
+      - kafka
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    volumes:
+      - ./backend:/app
+    networks:
+      - insightcore_network
+    command: celery -A core worker -l info
+
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: insightcore_celery_beat
+    depends_on:
+      - redis
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+    volumes:
+      - ./backend:/app
+    networks:
+      - insightcore_network
+    command: celery -A core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+  prometheus_data:
+  grafana_data:
+  static_volume:
+  media_volume:
+  node_modules:
+  models_volume:
+
+networks:
+  insightcore_network:
+    driver: bridge
