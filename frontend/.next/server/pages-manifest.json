@@ -1,0 +1,10 @@
+{
+  "/Alerts/Alerts": "pages/Alerts/Alerts.js",
+  "/Analytics/Analytics": "pages/Analytics/Analytics.js",
+  "/Dashboard/Dashboard": "pages/Dashboard/Dashboard.js",
+  "/Events/Events": "pages/Events/Events.js",
+  "/VideoPlayer/VideoPlayer": "pages/VideoPlayer/VideoPlayer.js",
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/_error": "pages/_error.js"
+}

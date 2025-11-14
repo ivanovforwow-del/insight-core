@@ -1,0 +1,20 @@
+{
+  "devFiles": [],
+  "ampDevFiles": [],
+  "polyfillFiles": [],
+  "lowPriorityFiles": [],
+  "rootMainFiles": [],
+  "pages": {
+    "/VideoPlayer/VideoPlayer": [
+      "static/chunks/1609b9e7f3ba4e60.js",
+      "static/chunks/5e1703d95de6f39c.js",
+      "static/chunks/244b55d04e42c8e3.js",
+      "static/chunks/702d361b569eedca.js",
+      "static/chunks/6fc93a891208e094.js",
+      "static/chunks/9f1f53728e3fae01.js",
+      "static/chunks/32d9c8dccd6233ce.css",
+      "static/chunks/turbopack-2c06f6f3bdbf48e8.js"
+    ]
+  },
+  "ampFirstPages": []
+}

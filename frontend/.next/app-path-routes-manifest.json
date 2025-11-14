@@ -1,0 +1,10 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/alerts/page": "/alerts",
+  "/analytics/page": "/analytics",
+  "/cameras/page": "/cameras",
+  "/events/page": "/events",
+  "/page": "/",
+  "/video-player/page": "/video-player"
+}
