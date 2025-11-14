@@ -83,6 +83,7 @@ class AnalysisEngine:
                 
                 # Optional: Draw detections on frame for visualization
                 if self.config.draw_detections:
+                    detections = self.detection_service.detect_objects(frame)
                     frame = self.detection_service.draw_detections(frame, detections)
                     
                     # Display frame (optional)

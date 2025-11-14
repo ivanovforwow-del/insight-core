@@ -1,8 +1,9 @@
 # services/rule_engine_service.py
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 from datetime import datetime
 import psycopg2
 from psycopg2.extras import RealDictCursor
+import numpy as np
 from .detection_service import Detection
 from .tracking_service import Track
 
