@@ -22,13 +22,11 @@ RUN apt-get update \
         libtiff-dev \
         gfortran \
         openexr \
-        libatlas-base-dev \
         liblapack-dev \
         libblas-dev \
         libhdf5-dev \
         libtbb-dev \
-        libtbb2 \
-        libdc1394-22-dev \
+        libtbbmalloc2 \
         libopenblas-dev \
         liblapacke-dev \
         wget \
