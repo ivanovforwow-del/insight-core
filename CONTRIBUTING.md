@@ -1,179 +1,179 @@
-# Contributing to InsightCore
+# Вклад в развитие InsightCore
 
-Thank you for your interest in contributing to InsightCore! This document provides guidelines and instructions for contributing to the project.
+Спасибо за ваш интерес к участию в развитии InsightCore! Этот документ содержит руководящие принципы и инструкции по внесению вклада в проект.
 
-## 🚧 Table of Contents
+## 🚧 Содержание
 
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [Development Setup](#development-setup)
-- [Project Structure](#project-structure)
-- [Development Workflow](#development-workflow)
-- [Coding Standards](#coding-standards)
-- [Testing](#testing)
-- [Documentation](#documentation)
-- [Submitting Changes](#submitting-changes)
-- [Community](#community)
+- [Кодекс поведения](#кодекс-поведения)
+- [Начало работы](#начало-работы)
+- [Настройка среды разработки](#настройка-среды-разработки)
+- [Структура проекта](#структура-проекта)
+- [Рабочий процесс разработки](#рабочий-процесс-разработки)
+- [Стандарты кодирования](#стандарты-кодирования)
+- [Тестирование](#тестирование)
+- [Документация](#документация)
+- [Отправка изменений](#отправка-изменений)
+- [Сообщество](#сообщество)
 
-## 📜 Code of Conduct
+## 📜 Кодекс поведения
 
-This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to [maintainers].
+Этот проект и все, кто в нем участвует, регулируются нашим Кодексом поведения. Принимая участие, вы соглашаетесь соблюдать этот код. Сообщайте о неприемлемом поведении администраторам проекта.
 
-## 🚀 Getting Started
+## 🚀 Начало работы
 
-### Prerequisites
+### Предварительные требования
 
-- **Python 3.9+** for backend development
-- **Node.js 18+** for frontend development
-- **Docker** and **Docker Compose**
+- **Python 3.9+** для разработки бэкенда
+- **Node.js 18+** для разработки фронтенда
+- **Docker** и **Docker Compose**
 - **Git**
-- **Redis** (for caching and queues)
-- **PostgreSQL** with PostGIS extension
+- **Redis** (для кэширования и очередей)
+- **PostgreSQL** с расширением PostGIS
 
-### Development Environment Setup
+### Настройка среды разработки
 
-1. **Fork the repository**
+1. **Форк репозитория**
    ```bash
-   git clone https://github.com/your-username/insightcore.git
+   git clone https://github.com/ваш-пользователь/insightcore.git
    cd insightcore
-   git remote add upstream https://github.com/original-org/insightcore.git
+   git remote add upstream https://github.com/оригинальная-организация/insightcore.git
    ```
 
-2. **Create a virtual environment for backend**
+2. **Создание виртуального окружения для бэкенда**
    ```bash
    cd backend
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate  # В Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
-3. **Install frontend dependencies**
+3. **Установка зависимостей фронтенда**
    ```bash
    cd frontend
    npm install
    ```
 
-4. **Set up environment variables**
+4. **Настройка переменных окружения**
    ```bash
    cp .env.example .env
-   # Edit .env with your local configuration
+   # Отредактируйте .env с вашей локальной конфигурацией
    ```
 
-5. **Run database migrations**
+5. **Выполнение миграций базы данных**
    ```bash
    cd backend
    python manage.py migrate
    python manage.py createsuperuser
    ```
 
-## 🏗️ Project Structure
+## 🏗️ Структура проекта
 
 ```
 insight-core/
-├── backend/                 # Django backend application
-│   ├── core/               # Django settings, URLs, middleware
-│   ├── cameras/            # Camera-related models and views
-│   ├── analytics/          # Analytics models and business logic
-│   ├── videos/             # Video processing models
-│   ├── events/             # Event models and processing
-│   ├── alerts/             # Alert system models
-│   ├── api/                # REST API endpoints
-│   └── manage.py           # Django management script
-├── frontend/               # React frontend application
+├── backend/                 # Django бэкенд приложение
+│   ├── core/               # Django настройки, URL-адреса, промежуточное ПО
+│   ├── cameras/            # Модели и представления, связанные с камерами
+│   ├── analytics/          # Модели аналитики и бизнес-логика
+│   ├── videos/             # Модели обработки видео
+│   ├── events/             # Модели и обработка событий
+│   ├── alerts/             # Модели системы оповещений
+│   ├── api/                # Конечные точки REST API
+│   └── manage.py           # Django скрипт управления
+├── frontend/               # React фронтенд приложение
 │   ├── src/
-│   │   ├── components/     # Reusable React components
-│   │   ├── pages/          # Page-level components
-│   │   ├── api/            # API service calls
-│   │   ├── hooks/          # Custom React hooks
-│   │   └── utils/          # Utility functions
-│   ├── public/             # Static assets
-│   └── package.json        # Frontend dependencies
-├── analyzer/               # Video analysis service
-│   ├── analyzer_service.py # Main analysis service
-│   ├── requirements.txt    # Python dependencies
-│   └── Dockerfile          # Container configuration
-├── monitoring/             # Monitoring configurations
-├── .github/                # GitHub configuration
-│   └── workflows/          # CI/CD workflows
-├── docker-compose.yml      # Docker orchestration
-├── README.md               # Project documentation
-└── CONTRIBUTING.md         # This file
+│   │   ├── components/     # Повторно используемые React компоненты
+│   │   ├── pages/          # Компоненты на уровне страниц
+│   │   ├── api/            # Вызовы сервисов API
+│   │   ├── hooks/          # Пользовательские React хуки
+│   │   └── utils/          # Вспомогательные функции
+│   ├── public/             # Статические ресурсы
+│   └── package.json        # Зависимости фронтенда
+├── analyzer/               # Сервис анализа видео
+│   ├── analyzer_service.py # Основной сервис анализа
+│   ├── requirements.txt    # Python зависимости
+│   └── Dockerfile          # Конфигурация контейнера
+├── monitoring/             # Конфигурации мониторинга
+├── .github/                # Конфигурация GitHub
+│   └── workflows/          # CI/CD рабочие процессы
+├── docker-compose.yml      # Оркестрация Docker
+├── README.md               # Документация проекта
+└── CONTRIBUTING.md         # Этот файл
 ```
 
-## 🔄 Development Workflow
+## 🔄 Рабочий процесс разработки
 
-### 1. Branch Strategy
+### 1. Стратегия ветвления
 
-- **main**: Production-ready code
-- **develop**: Integration branch for features
-- **feature/**: Feature branches (e.g., `feature/camera-management`)
-- **bugfix/**: Bug fix branches (e.g., `bugfix/login-issue`)
-- **hotfix/**: Critical production fixes
+- **main**: Готовый к продакшену код
+- **develop**: Интеграционная ветка для фич
+- **feature/**: Ветки фич (например, `feature/camera-management`)
+- **bugfix/**: Ветки исправлений багов (например, `bugfix/login-issue`)
+- **hotfix/**: Критические исправления продакшена
 
-### 2. Creating a Feature Branch
+### 2. Создание ветки фичи
 
 ```bash
 git checkout develop
 git pull origin develop
-git checkout -b feature/your-feature-name
+git checkout -b feature/название-вашей-фичи
 ```
 
-### 3. Making Changes
+### 3. Внесение изменений
 
-- Write clean, well-documented code
-- Follow the coding standards below
-- Write tests for your changes
-- Update documentation as needed
+- Пишите чистый, хорошо документированный код
+- Следуйте стандартам кодирования ниже
+- Пишите тесты для ваших изменений
+- При необходимости обновляйте документацию
 
-### 4. Commit Messages
+### 4. Сообщения коммитов
 
-Use conventional commits format:
+Используйте формат conventional commits:
 
 ```
-<type>(<scope>): <short summary>
-<BLANK LINE>
-<body - optional>
-<BLANK LINE>
-<footer - optional>
+<тип>(<область>): <краткое резюме>
+<ПУСТАЯ СТРОКА>
+<тело - опционально>
+<ПУСТАЯ СТРОКА>
+<подпись - опционально>
 ```
 
-Examples:
-- `feat(camera): add RTSP stream validation`
-- `fix(analytics): resolve memory leak in object tracking`
-- `docs: update API documentation for events`
+Примеры:
+- `feat(camera): добавить валидацию RTSP потока`
+- `fix(analytics): исправить утечку памяти в отслеживании объектов`
+- `docs: обновить документацию API для событий`
 
-## 📝 Coding Standards
+## 📝 Стандарты кодирования
 
-### Backend (Python/Django)
+### Бэкенд (Python/Django)
 
-- **Style**: Follow PEP 8
-- **Imports**: Use absolute imports
-- **Naming**: Use snake_case for functions/variables, PascalCase for classes
-- **Docstrings**: Use Google-style docstrings
-- **Type hints**: Use type hints for all functions
+- **Стиль**: Следуйте PEP 8
+- **Импорты**: Используйте абсолютные импорты
+- **Именование**: Используйте snake_case для функций/переменных, PascalCase для классов
+- **Докстринги**: Используйте докстринги в стиле Google
+- **Подсказки типов**: Используйте подсказки типов для всех функций
 
 ```python
 def process_video_frame(frame: np.ndarray, camera_id: str) -> List[Detection]:
-    """Process a single video frame and detect objects.
+    """Обработка одного видео кадра и обнаружение объектов.
     
     Args:
-        frame: Input video frame as numpy array
-        camera_id: Unique identifier for the camera
+        frame: Входной видео кадр в виде массива numpy
+        camera_id: Уникальный идентификатор камеры
         
     Returns:
-        List of detected objects with their properties
+        Список обнаруженных объектов с их свойствами
     """
-    # Implementation here
+    # Реализация здесь
     pass
 ```
 
-### Frontend (React/TypeScript)
+### Фронтенд (React/TypeScript)
 
-- **Style**: Follow Airbnb JavaScript Style Guide
-- **Naming**: Use PascalCase for components, camelCase for functions/variables
-- **TypeScript**: Use TypeScript for type safety
-- **Components**: Keep components small and focused
-- **Hooks**: Use custom hooks for reusable logic
+- **Стиль**: Следуйте руководству по стилю JavaScript Airbnb
+- **Именование**: Используйте PascalCase для компонентов, camelCase для функций/переменных
+- **TypeScript**: Используйте TypeScript для обеспечения безопасности типов
+- **Компоненты**: Делайте компоненты небольшими и сфокусированными
+- **Хуки**: Используйте пользовательские хуки для повторно используемой логики
 
 ```typescript
 interface Camera {
@@ -184,51 +184,51 @@ interface Camera {
 }
 
 const CameraCard: React.FC<{ camera: Camera }> = ({ camera }) => {
- // Component implementation
+ // Реализация компонента
  return <div>{camera.name}</div>;
 };
 ```
 
-### Database Models
+### Модели базы данных
 
-- Use descriptive field names
-- Add `help_text` for complex fields
-- Use `choices` for limited options
-- Add `verbose_name` and `verbose_name_plural` for clarity
+- Используйте описательные имена полей
+- Добавляйте `help_text` для сложных полей
+- Используйте `choices` для ограниченных вариантов
+- Добавляйте `verbose_name` и `verbose_name_plural` для ясности
 
 ```python
 class Event(models.Model):
     SEVERITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-        ('critical', 'Critical'),
+        ('low', 'Низкий'),
+        ('medium', 'Средний'),
+        ('high', 'Высокий'),
+        ('critical', 'Критический'),
     ]
     
     severity = models.CharField(
         max_length=20,
         choices=SEVERITY_CHOICES,
         default='medium',
-        help_text="Severity level of the event"
+        help_text="Уровень серьезности события"
     )
 ```
 
-## 🧪 Testing
+## 🧪 Тестирование
 
-### Backend Tests
+### Тесты бэкенда
 
-Run all tests:
+Запустить все тесты:
 ```bash
 cd backend
 python -m pytest
 ```
 
-Run tests with coverage:
+Запустить тесты с покрытием:
 ```bash
 python -m pytest --cov=.
 ```
 
-Add new tests in `backend/tests/` following the structure:
+Добавьте новые тесты в `backend/tests/` следуя структуре:
 ```
 backend/tests/
 ├── test_models.py
@@ -237,115 +237,115 @@ backend/tests/
 └── conftest.py
 ```
 
-### Frontend Tests
+### Тесты фронтенда
 
-Run tests:
+Запустить тесты:
 ```bash
 cd frontend
 npm test
 ```
 
-Run tests with coverage:
+Запустить тесты с покрытием:
 ```bash
 npm test -- --coverage
 ```
 
-### Test Standards
+### Стандарты тестирования
 
-- **Unit Tests**: Test individual functions and components
-- **Integration Tests**: Test API endpoints and database interactions
-- **Coverage**: Aim for 80%+ test coverage
-- **Naming**: Use descriptive test names
+- **Модульные тесты**: Тестирование отдельных функций и компонентов
+- **Интеграционные тесты**: Тестирование конечных точек API и взаимодействия с базой данных
+- **Покрытие**: Стремитесь к 80%+ покрытию тестами
+- **Именование**: Используйте описательные имена тестов
 
-## 📚 Documentation
+## 📚 Документация
 
-### Code Documentation
+### Документирование кода
 
-- **Python**: Use Google-style docstrings
-- **JavaScript/TypeScript**: Use JSDoc comments
-- **API**: Document all endpoints in `docs/api.md`
+- **Python**: Используйте докстринги в стиле Google
+- **JavaScript/TypeScript**: Используйте комментарии JSDoc
+- **API**: Документируйте все конечные точки в `docs/api.md`
 
-### Architecture Documentation
+### Документирование архитектуры
 
-Update architecture diagrams and design decisions in:
+Обновляйте диаграммы архитектуры и решения по дизайну в:
 - `docs/architecture.md`
-- `docs/decisions/` (Architecture Decision Records)
+- `docs/decisions/` (Записи архитектурных решений)
 
-### User Documentation
+### Документация для пользователей
 
-- Update README.md for new features
-- Add user guides in `docs/guides/`
-- Update API documentation
+- Обновляйте README.md для новых функций
+- Добавляйте руководства пользователя в `docs/guides/`
+- Обновляйте документацию API
 
-## 📤 Submitting Changes
+## 📤 Отправка изменений
 
-### 1. Before Submitting
+### 1. Перед отправкой
 
 ```bash
-# Run all tests
-python -m pytest  # Backend
-npm test          # Frontend
+# Запустить все тесты
+python -m pytest  # Бэкенд
+npm test          # Фронтенд
 
-# Run linters
-flake8 backend/   # Python linting
-npm run lint      # Frontend linting
+# Запустить линтеры
+flake8 backend/   # Python линтинг
+npm run lint      # Фронтенд линтинг
 
-# Update documentation
-# Make sure README.md and other docs are updated
+# Обновить документацию
+# Убедитесь, что README.md и другие документы обновлены
 ```
 
-### 2. Commit and Push
+### 2. Коммит и пуш
 
 ```bash
 git add .
-git commit -m "feat: add camera management functionality"
-git push origin feature/your-feature-name
+git commit -m "feat: добавить функциональность управления камерами"
+git push origin feature/название-вашей-фичи
 ```
 
-### 3. Create Pull Request
+### 3. Создание Pull Request
 
-- Go to the repository on GitHub
-- Click "New pull request"
-- Select your feature branch
-- Fill in the PR template:
-  - **Title**: Clear, concise description
-  - **Description**: What was changed and why
-  - **Related Issues**: Link to related issues
- - **Testing**: How to test the changes
-  - **Checklist**: Confirm all requirements are met
+- Перейдите в репозиторий на GitHub
+- Нажмите "New pull request"
+- Выберите вашу ветку фичи
+- Заполните шаблон PR:
+  - **Заголовок**: Четкое, краткое описание
+  - **Описание**: Что было изменено и почему
+  - **Связанные задачи**: Ссылки на связанные задачи
+  - **Тестирование**: Как протестировать изменения
+  - **Чеклист**: Подтвердите, что все требования выполнены
 
-### 4. PR Review Process
+### 4. Процесс ревью PR
 
-- Maintainers will review your code
-- Address feedback and make changes
-- PR will be merged after approval
-- Branch will be deleted after merge
+- Сопровождающие рассмотрят ваш код
+- Исправьте отзывы и внесите изменения
+- PR будет объединен после одобрения
+- Ветка будет удалена после объединения
 
-## 🤝 Community
+## 🤝 Сообщество
 
-### Getting Help
+### Получение помощи
 
-- **Issues**: Report bugs or request features
-- **Discussions**: Ask questions and share ideas
-- **Documentation**: Check existing docs first
+- **Задачи**: Сообщайте об ошибках или запрашивайте функции
+- **Обсуждения**: Задавайте вопросы и делитесь идеями
+- **Документация**: Сначала проверьте существующую документацию
 
-### Code Review Guidelines
+### Руководящие принципы ревью кода
 
-When reviewing code, consider:
-- **Functionality**: Does it work as expected?
-- **Code Quality**: Is it clean and maintainable?
-- **Security**: Are there any security concerns?
-- **Performance**: Is it efficient?
-- **Tests**: Are there adequate tests?
-- **Documentation**: Is it well-documented?
+При ревью кода учитывайте:
+- **Функциональность**: Работает ли он, как ожидалось?
+- **Качество кода**: Чист ли он и поддерживаем ли?
+- **Безопасность**: Есть ли какие-либо проблемы безопасности?
+- **Производительность**: Эффективен ли он?
+- **Тесты**: Есть ли адекватные тесты?
+- **Документация**: Хорошо ли он документирован?
 
-## 🆘 Need Help?
+## 🆘 Нужна помощь?
 
-If you have questions about contributing:
-- Check the existing documentation
-- Open an issue with your question
-- Join our community discussions
+Если у вас есть вопросы о внесении вклада:
+- Проверьте существующую документацию
+- Откройте задачу с вашим вопросом
+- Присоединяйтесь к обсуждениям нашего сообщества
 
 ---
 
-Thank you for contributing to InsightCore! Your efforts help make video analytics more accessible and effective for industrial safety and security.
+Спасибо за вклад в развитие InsightCore! Ваши усилия помогают сделать видеоаналитику более доступной и эффективной для промышленной безопасности и охраны.
