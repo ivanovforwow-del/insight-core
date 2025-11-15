@@ -1,0 +1,53 @@
+FROM python:3.13-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Install system dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libtiff-dev \
+        libfreetype6-dev \
+        liblcms2-dev \
+        libwebp-dev \
+        zlib1g-dev \
+        libopenjp2-7-dev \
+        libharfbuzz-dev \
+        libfribidi-dev \
+        libxcb1-dev \
+        libcairo2-dev \
+        libopenblas-dev \
+        liblapack-dev \
+        gfortran \
+        ffmpeg \
+        libsm6 \
+        libxext6 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application
+COPY . .
+
+# Create necessary directories
+RUN mkdir -p /app/staticfiles /app/media /app/logs
+
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+# Expose port
+EXPOSE 8000
+
+# Run the application
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "120"]

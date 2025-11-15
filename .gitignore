@@ -129,10 +129,30 @@ dmypy.json
 # Django & Flask
 instance/
 .webassets-cache
-
 # Assets cache
 node_modules/
 jspm_packages/
+
+# Next.js
+.next/
+out/
+
+# Vite
+.vite/
+
+# Build outputs
+dist/
+build/
+
+# Dependency directories
+.node_modules/
+
+# Python virtual environment in specific services
+backend/venv/
+backend/env/
+analyzer/venv/
+analyzer/env/
+
 
 # Coverage
 coverage/
