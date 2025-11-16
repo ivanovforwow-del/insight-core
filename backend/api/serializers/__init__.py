@@ -5,5 +5,5 @@ from .camera_serializers import *
 from .event_serializers import *
 from .video_serializers import *
 
-# Also import UserSerializer which is in the main serializers.py file
-from ..serializers import UserSerializer
+# UserSerializer is available from the main serializers.py file
+# Import it directly from api.serializers when needed
