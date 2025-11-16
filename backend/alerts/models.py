@@ -33,7 +33,7 @@ class AlertChannel(models.Model):
     class Meta:
         db_table = 'alerts_alert_channels'
         indexes = [
-            models.Index(fields=['channel_type', 'enabled'], name='alerts_alert_chann_channel_enabled_idx'),
+            models.Index(fields=['channel_type', 'enabled'], name='alert_chann_type_enabled_idx'),
         ]
     
     def __str__(self):
@@ -66,9 +66,9 @@ class Alert(models.Model):
     class Meta:
         db_table = 'alerts_alerts'
         indexes = [
-            models.Index(fields=['event', 'status'], name='alerts_alerts_event_status_idx'),
-            models.Index(fields=['channel', 'status'], name='alerts_alerts_channel_status_idx'),
-            models.Index(fields=['created_at'], name='alerts_alerts_created_at_idx'),
+            models.Index(fields=['event', 'status'], name='alert_event_status_idx'),
+            models.Index(fields=['channel', 'status'], name='alert_channel_status_idx'),
+            models.Index(fields=['created_at'], name='alert_created_at_idx'),
         ]
     
     def __str__(self):

@@ -26,8 +26,8 @@ class VideoFile(models.Model):
     class Meta:
         db_table = 'videos_video_files'
         indexes = [
-            models.Index(fields=['camera', 'start_time'], name='videos_video_files_camera_start_time_idx'),
-            models.Index(fields=['created_at'], name='videos_video_files_created_at_idx'),
+            models.Index(fields=['camera', 'start_time'], name='vid_files_cam_start_time_idx'),
+            models.Index(fields=['created_at'], name='vid_files_created_at_idx'),
         ]
     
     def __str__(self):
@@ -52,9 +52,9 @@ class Clip(models.Model):
     class Meta:
         db_table = 'videos_clips'
         indexes = [
-            models.Index(fields=['video_file', 'start_offset'], name='videos_clips_video_file_start_offset_idx'),
+            models.Index(fields=['video_file', 'start_offset'], name='vid_clips_vf_start_offset_idx'),
             models.Index(fields=['is_annotated'], name='videos_clips_is_annotated_idx'),
-            models.Index(fields=['created_at'], name='videos_clips_created_at_idx'),
+            models.Index(fields=['created_at'], name='vid_clips_created_at_idx'),
         ]
     
     def __str__(self):
@@ -88,9 +88,9 @@ class VideoAnnotation(models.Model):
     class Meta:
         db_table = 'videos_video_annotations'
         indexes = [
-            models.Index(fields=['clip', 'label'], name='videos_video_annot_clip_label_idx'),
-            models.Index(fields=['status'], name='videos_video_annot_status_idx'),
-            models.Index(fields=['created_at'], name='videos_video_annot_created_at_idx'),
+            models.Index(fields=['clip', 'label'], name='vid_annot_clip_label_idx'),
+            models.Index(fields=['status'], name='videos_vid_annot_status_idx'),
+            models.Index(fields=['created_at'], name='vid_annot_created_at_idx'),
         ]
     
     def __str__(self):

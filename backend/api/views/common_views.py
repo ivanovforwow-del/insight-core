@@ -4,6 +4,19 @@ from rest_framework.response import Response
 from django.db import connection
 from django.conf import settings
 from django.utils import timezone
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    pass
+
+
+class CustomTokenRefreshView(TokenRefreshView):
+    pass
+
+
+class CustomTokenVerifyView(TokenVerifyView):
+    pass
 
 
 @api_view(['GET'])

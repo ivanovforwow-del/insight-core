@@ -1,9 +1,25 @@
 # views/analytics_views.py
+from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+from analytics.models import MLModel
+from ..serializers.analytics_serializers import MLModelSerializer
 
 from ..services.analytics_service import AnalyticsService
+
+
+class MLModelViewSet(viewsets.ModelViewSet):
+    queryset = MLModel.objects.all()
+    serializer_class = MLModelSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['is_active', 'version']
+    search_fields = ['name', 'description']
+    ordering_fields = ['created_at', 'updated_at', 'accuracy']
+    ordering = ['-created_at']
 
 
 # Analytics Views

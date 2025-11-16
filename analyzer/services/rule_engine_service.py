@@ -22,7 +22,7 @@ class RuleEngineService:
         # Get rules for this camera from database
         cursor = self.db_connection.cursor(cursor_factory=RealDictCursor)
         cursor.execute("""
-            SELECT * FROM rules 
+            SELECT * FROM events_rules
             WHERE camera_id = %s AND enabled = true
         """, (camera_id,))
         rules = cursor.fetchall()

@@ -50,36 +50,6 @@ class LineViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
 
-class RuleViewSet(viewsets.ModelViewSet):
-    queryset = Rule.objects.all()
-    serializer_class = RuleSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['camera', 'rule_type', 'severity', 'enabled']
-    search_fields = ['name', 'description', 'camera__name']
-    ordering_fields = ['created_at', 'updated_at']
-    ordering = ['-created_at']
-
-
-class VideoFileViewSet(viewsets.ModelViewSet):
-    queryset = VideoFile.objects.all()
-    serializer_class = VideoFileSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['camera', 'start_time', 'end_time']
-    search_fields = ['id', 'storage_path']
-    ordering_fields = ['start_time', 'end_time', 'created_at']
-    ordering = ['-start_time']
-
-
-class ClipViewSet(viewsets.ModelViewSet):
-    queryset = Clip.objects.all()
-    serializer_class = ClipSerializer
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['video_file', 'is_annotated']
-    search_fields = ['label', 'download_url']
-    ordering_fields = ['created_at', 'start_offset']
-    ordering = ['-created_at']
-
-
 # Camera-specific Views
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -146,4 +116,18 @@ def CameraConfigView(request, camera_id):
         except Camera.DoesNotExist:
             return Response({'error': 'Camera not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+           return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def RulesConfigView(request):
+   """Конфигурация правил"""
+   if request.method == 'GET':
+       rules = Rule.objects.all()
+       from ..serializers.event_serializers import RuleSerializer
+       serializer = RuleSerializer(rules, many=True)
+       return Response(serializer.data)
+   elif request.method == 'PUT':
+       # Здесь будет реализована логика обновления правил
+       return Response({'status': 'rules updated'})

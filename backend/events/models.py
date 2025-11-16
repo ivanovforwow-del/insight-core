@@ -50,8 +50,8 @@ class Rule(models.Model):
     class Meta:
         db_table = 'events_rules'
         indexes = [
-            models.Index(fields=['camera', 'rule_type'], name='events_rules_camera_rule_type_idx'),
-            models.Index(fields=['severity', 'enabled'], name='events_rules_severity_enabled_idx'),
+            models.Index(fields=['camera', 'rule_type'], name='events_rules_cam_rule_type_idx'),
+            models.Index(fields=['severity', 'enabled'], name='ev_rules_severity_enabled_idx'),
             models.Index(fields=['created_at'], name='events_rules_created_at_idx'),
         ]
     
@@ -71,7 +71,12 @@ class Event(models.Model):
     track_id = models.CharField(max_length=100, help_text="ID трека объекта")
     bbox = models.JSONField(help_text="Координаты bounding box")
     confidence = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    severity = models.CharField(max_length=20, choices=Rule.severity.field.choices)
+    severity = models.CharField(max_length=20, choices=[
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+        ('critical', 'Critical')
+    ])
     clip = models.ForeignKey(Clip, on_delete=models.SET_NULL, null=True, blank=True, related_name='events_events')
     resolved = models.BooleanField(default=False)
     resolved_at = models.DateTimeField(null=True, blank=True)
@@ -82,9 +87,9 @@ class Event(models.Model):
     class Meta:
         db_table = 'events_events'
         indexes = [
-            models.Index(fields=['camera', 'timestamp'], name='events_events_camera_timestamp_idx'),
-            models.Index(fields=['rule', 'severity'], name='events_events_rule_severity_idx'),
-            models.Index(fields=['resolved', 'timestamp'], name='events_events_resolved_timestamp_idx'),
+            models.Index(fields=['camera', 'timestamp'], name='ev_events_cam_timestamp_idx'),
+            models.Index(fields=['rule', 'severity'], name='ev_events_rule_severity_idx'),
+            models.Index(fields=['resolved', 'timestamp'], name='ev_events_res_tstamp_idx'),
             GinIndex(fields=['bbox'], name='events_events_bbox_gin'),  # Для поиска по JSON
         ]
     

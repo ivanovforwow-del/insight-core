@@ -81,7 +81,7 @@ class Zone(models.Model):
     class Meta:
         db_table = 'cameras_zones'
         indexes = [
-            models.Index(fields=['camera', 'zone_type'], name='cameras_zones_camera_zone_type_idx'),
+            models.Index(fields=['camera', 'zone_type'], name='cam_zones_cam_zone_type_idx'),
             models.Index(fields=['is_active'], name='cameras_zones_is_active_idx'),
         ]
     
@@ -123,7 +123,7 @@ class Line(models.Model):
     class Meta:
         db_table = 'cameras_lines'
         indexes = [
-            models.Index(fields=['camera', 'direction'], name='cameras_lines_camera_direction_idx'),
+            models.Index(fields=['camera', 'direction'], name='cam_lines_cam_direction_idx'),
             models.Index(fields=['is_active'], name='cameras_lines_is_active_idx'),
         ]
     

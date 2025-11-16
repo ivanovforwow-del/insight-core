@@ -8,9 +8,20 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django.utils import timezone
 from datetime import timedelta
 
-from events.models import Event
+from events.models import Event, Rule
 from ..serializers.event_serializers import EventSerializer
+from ..serializers.camera_serializers import RuleSerializer
 from ..services.event_service import EventService
+
+
+class RuleViewSet(viewsets.ModelViewSet):
+    queryset = Rule.objects.all()
+    serializer_class = RuleSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['camera', 'rule_type', 'severity', 'enabled']
+    search_fields = ['name', 'description', 'camera__name']
+    ordering_fields = ['created_at', 'updated_at']
+    ordering = ['-created_at']
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -84,7 +95,6 @@ def RuleEventsView(request, pk):
 def RuleTestView(request, pk):
     """Тестирование правила"""
     try:
-        rule = Event.objects.get(id=pk)  # This should be Rule model, fixing the reference
         from events.models import Rule
         rule = Rule.objects.get(id=pk)
         # Здесь будет реализована логика тестирования правила
