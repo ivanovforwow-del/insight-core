@@ -1,11 +1,12 @@
 from django.contrib import admin
-from django.contrib.postgres.fields import JSONField
+from django.db.models import JSONField
 from django.forms import widgets
 from .models import (
-    MLModel, Camera, Zone, Line, Rule, 
-    VideoFile, Clip, VideoAnnotation, 
-    Event, AlertChannel, Alert
+    MLModel, Camera, Zone, Line, Rule,
+    VideoFile, Clip, VideoAnnotation,
+    Event
 )
+from alerts.models import AlertChannel, Alert
 
 
 class PrettyJSONWidget(widgets.Textarea):

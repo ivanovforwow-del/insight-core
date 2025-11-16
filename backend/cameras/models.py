@@ -3,7 +3,6 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.fields import JSONField
 import uuid
 
 
@@ -27,15 +26,15 @@ class Camera(models.Model):
     )
     snapshot = models.ImageField(upload_to='camera_snapshots/', blank=True, null=True)
     vendor = models.CharField(max_length=100, blank=True)
-    stream_settings = JSONField(default=dict, blank=True)
+    stream_settings = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'cameras'
+        db_table = 'cameras_cameras'
         indexes = [
-            models.Index(fields=['status']),
-            models.Index(fields=['created_at']),
+            models.Index(fields=['status'], name='cameras_cameras_status_idx'),
+            models.Index(fields=['created_at'], name='cameras_cameras_created_at_idx'),
         ]
     
     def __str__(self):
@@ -49,7 +48,7 @@ class Zone(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE, related_name='zones')
     name = models.CharField(max_length=255)
-    polygon = JSONField(help_text="Координаты полигона в формате [{'x': 0, 'y': 0}, ...]")
+    polygon = models.JSONField(help_text="Координаты полигона в формате [{'x': 0, 'y': 0}, ...]")
     zone_type = models.CharField(
         max_length=50,
         choices=[
@@ -80,10 +79,10 @@ class Zone(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'zones'
+        db_table = 'cameras_zones'
         indexes = [
-            models.Index(fields=['camera', 'zone_type']),
-            models.Index(fields=['is_active']),
+            models.Index(fields=['camera', 'zone_type'], name='cameras_zones_camera_zone_type_idx'),
+            models.Index(fields=['is_active'], name='cameras_zones_is_active_idx'),
         ]
     
     def __str__(self):
@@ -97,7 +96,7 @@ class Line(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE, related_name='lines')
     name = models.CharField(max_length=255)
-    points = JSONField(help_text="Координаты линии в формате [{'x': 0, 'y': 0}, {'x': 1, 'y': 1}]")
+    points = models.JSONField(help_text="Координаты линии в формате [{'x': 0, 'y': 0}, {'x': 1, 'y': 1}]")
     direction = models.CharField(
         max_length=20,
         choices=[
@@ -122,10 +121,10 @@ class Line(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'lines'
+        db_table = 'cameras_lines'
         indexes = [
-            models.Index(fields=['camera', 'direction']),
-            models.Index(fields=['is_active']),
+            models.Index(fields=['camera', 'direction'], name='cameras_lines_camera_direction_idx'),
+            models.Index(fields=['is_active'], name='cameras_lines_is_active_idx'),
         ]
     
     def __str__(self):

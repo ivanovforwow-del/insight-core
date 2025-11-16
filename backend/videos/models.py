@@ -3,7 +3,6 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.fields import JSONField
 from cameras.models import Camera
 import uuid
 
@@ -25,10 +24,10 @@ class VideoFile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'video_files'
+        db_table = 'videos_video_files'
         indexes = [
-            models.Index(fields=['camera', 'start_time']),
-            models.Index(fields=['created_at']),
+            models.Index(fields=['camera', 'start_time'], name='videos_video_files_camera_start_time_idx'),
+            models.Index(fields=['created_at'], name='videos_video_files_created_at_idx'),
         ]
     
     def __str__(self):
@@ -51,11 +50,11 @@ class Clip(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'clips'
+        db_table = 'videos_clips'
         indexes = [
-            models.Index(fields=['video_file', 'start_offset']),
-            models.Index(fields=['is_annotated']),
-            models.Index(fields=['created_at']),
+            models.Index(fields=['video_file', 'start_offset'], name='videos_clips_video_file_start_offset_idx'),
+            models.Index(fields=['is_annotated'], name='videos_clips_is_annotated_idx'),
+            models.Index(fields=['created_at'], name='videos_clips_created_at_idx'),
         ]
     
     def __str__(self):
@@ -71,9 +70,9 @@ class VideoAnnotation(models.Model):
     label = models.CharField(max_length=255)
     start_time = models.FloatField(help_text="Время начала в секундах от начала клипа")
     end_time = models.FloatField(help_text="Время окончания в секундах от начала клипа")
-    bbox = JSONField(help_text="Координаты bounding box в формате {'x': 0, 'y': 0, 'w': 0, 'h': 0}")
+    bbox = models.JSONField(help_text="Координаты bounding box в формате {'x': 0, 'y': 0, 'w': 0, 'h': 0}")
     confidence = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    created_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    created_by = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='videos_video_annotations_created_by_user')
     status = models.CharField(
         max_length=20,
         choices=[
@@ -87,11 +86,11 @@ class VideoAnnotation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'video_annotations'
+        db_table = 'videos_video_annotations'
         indexes = [
-            models.Index(fields=['clip', 'label']),
-            models.Index(fields=['status']),
-            models.Index(fields=['created_at']),
+            models.Index(fields=['clip', 'label'], name='videos_video_annot_clip_label_idx'),
+            models.Index(fields=['status'], name='videos_video_annot_status_idx'),
+            models.Index(fields=['created_at'], name='videos_video_annot_created_at_idx'),
         ]
     
     def __str__(self):

@@ -3,7 +3,6 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.fields import JSONField
 from events.models import Event
 from django.contrib.auth.models import User
 import uuid
@@ -25,16 +24,16 @@ class AlertChannel(models.Model):
             ('push', 'Push Notification')
         ]
     )
-    config = JSONField(help_text="Конфигурация канала (токены, адреса и т.д.)")
+    config = models.JSONField(help_text="Конфигурация канала (токены, адреса и т.д.)")
     enabled = models.BooleanField(default=True)
-    schedule = JSONField(default=dict, blank=True, help_text="Расписание отправки уведомлений")
+    schedule = models.JSONField(default=dict, blank=True, help_text="Расписание отправки уведомлений")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'alert_channels'
+        db_table = 'alerts_alert_channels'
         indexes = [
-            models.Index(fields=['channel_type', 'enabled']),
+            models.Index(fields=['channel_type', 'enabled'], name='alerts_alert_chann_channel_enabled_idx'),
         ]
     
     def __str__(self):
@@ -65,11 +64,11 @@ class Alert(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        db_table = 'alerts'
+        db_table = 'alerts_alerts'
         indexes = [
-            models.Index(fields=['event', 'status']),
-            models.Index(fields=['channel', 'status']),
-            models.Index(fields=['created_at']),
+            models.Index(fields=['event', 'status'], name='alerts_alerts_event_status_idx'),
+            models.Index(fields=['channel', 'status'], name='alerts_alerts_channel_status_idx'),
+            models.Index(fields=['created_at'], name='alerts_alerts_created_at_idx'),
         ]
     
     def __str__(self):
