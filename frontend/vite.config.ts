@@ -16,7 +16,7 @@ export default defineConfig({
       manifest: {
         name: 'InsightCore',
         short_name: 'InsightCore',
-        description: 'Video Analytics Platform',
+        description: 'Платформа видеоаналитики',
         theme_color: '#1890ff',
         icons: [
           {

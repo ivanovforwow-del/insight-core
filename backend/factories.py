@@ -24,7 +24,7 @@ class CameraFactory(factory.django.DjangoModelFactory):
         model = Camera
 
     name = factory.Sequence(lambda n: f"Camera {n}")
-    rtsp_url = factory.LazyAttribute(lambda obj: f"rtsp://example.com/camera{obj.id}")
+    rtsp_url = factory.LazyAttribute(lambda obj: f"rtsp://example.com/camera{obj.name.split()[-1]}")
     location = factory.Faker('address')
     status = factory.Iterator(['active', 'inactive', 'error', 'maintenance'])
     vendor = factory.Faker('company')
@@ -67,7 +67,7 @@ class EventRuleFactory(factory.django.DjangoModelFactory):
 
 class AnalyticsRuleFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = 'analytics.Rule'
+        model = Rule  # Use the Rule model from the events app
 
     name = factory.Sequence(lambda n: f"Analytics Rule {n}")
     camera = factory.SubFactory(CameraFactory)
@@ -131,7 +131,7 @@ class EventFactory(factory.django.DjangoModelFactory):
 
 class AnalyticsEventFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = 'analytics.Event'
+        model = Event  # Use the Event model from the events app
 
     rule = factory.SubFactory(AnalyticsRuleFactory)
     camera = factory.SubFactory(CameraFactory)

@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { alertService } from '../../services/alertService';
 import { Alert } from '../../types';
 
-// Query keys for alert data
+// Ключи запросов для данных оповещений
 const ALERT_QUERY_KEYS = {
   all: ['alerts'] as const,
   lists: () => [...ALERT_QUERY_KEYS.all, 'list'] as const,
@@ -25,7 +25,7 @@ export const useAlerts = (params?: {
   return useQuery({
     queryKey: ALERT_QUERY_KEYS.list(params),
     queryFn: () => alertService.getAlerts(params),
-    staleTime: 30 * 100, // 30 seconds
+    staleTime: 30 * 100, // 30 секунд
   });
 };
 
@@ -41,7 +41,7 @@ export const useUnreadAlertsCount = () => {
   return useQuery({
     queryKey: ALERT_QUERY_KEYS.unreadCount(),
     queryFn: () => alertService.getUnreadAlertsCount(),
-    staleTime: 10 * 1000, // 10 seconds
+    staleTime: 10 * 1000, // 10 секунд
   });
 };
 
@@ -49,7 +49,7 @@ export const useRecentAlerts = (limit: number = 10) => {
   return useQuery({
     queryKey: ALERT_QUERY_KEYS.recent(limit),
     queryFn: () => alertService.getRecentAlerts(limit),
-    staleTime: 60 * 1000, // 1 minute
+    staleTime: 60 * 1000, // 1 минута
   });
 };
 

@@ -4,12 +4,12 @@ import { AppProvider } from '@/providers/AppProvider';
 import SSRProvider from './ssr-provider';
 import type { Metadata } from 'next';
 
-// Import Ant Design styles
+// Импорт стилей Ant Design
 import 'antd/dist/reset.css';
 
 export const metadata: Metadata = {
-  title: 'InsightCore - Video Analytics Platform',
-  description: 'Advanced video analytics and surveillance platform',
+ title: 'InsightCore - Платформа видеоаналитики',
+  description: 'Передовая платформа видеоаналитики и наблюдения',
 };
 
 export default function RootLayout({
@@ -22,16 +22,7 @@ export default function RootLayout({
       <body>
         <SSRProvider>
           <AppProvider>
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorPrimary: '#1890ff',
-                  borderRadius: 6,
-                },
-              }}
-            >
-              {children}
-            </ConfigProvider>
+            {children}
           </AppProvider>
         </SSRProvider>
       </body>

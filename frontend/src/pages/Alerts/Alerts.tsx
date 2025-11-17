@@ -40,7 +40,7 @@ const Alerts = () => {
   const [selectedAlert, setSelectedAlert] = React.useState<Alert | null>(null);
   const queryClient = useQueryClient();
 
-  // Mock alerts data
+  // Данные оповещений для тестирования
   const { data: alerts = [], isLoading } = useQuery<Alert[]>({
     queryKey: ['alerts', filters],
     queryFn: async () => [
@@ -112,8 +112,8 @@ const Alerts = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['alerts'] });
       notification.success({
-        message: 'Success',
-        description: 'All alerts cleared',
+        message: 'Успех',
+        description: 'Все оповещения очищены',
       });
     },
   });
@@ -140,18 +140,18 @@ const Alerts = () => {
       sorter: (a: Alert, b: Alert) => a.id - b.id,
     },
     {
-      title: 'Title',
+      title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
       sorter: (a: Alert, b: Alert) => a.title.localeCompare(b.title),
     },
     {
-      title: 'Message',
+      title: 'Сообщение',
       dataIndex: 'message',
       key: 'message',
     },
     {
-      title: 'Type',
+      title: 'Тип',
       dataIndex: 'type',
       key: 'type',
       render: (type: string) => (
@@ -161,21 +161,21 @@ const Alerts = () => {
       ),
       sorter: (a: Alert, b: Alert) => a.type.localeCompare(b.type),
       filters: [
-        { text: 'Info', value: 'info' },
-        { text: 'Warning', value: 'warning' },
-        { text: 'Error', value: 'error' },
-        { text: 'Success', value: 'success' },
+        { text: 'Информация', value: 'info' },
+        { text: 'Предупреждение', value: 'warning' },
+        { text: 'Ошибка', value: 'error' },
+        { text: 'Успех', value: 'success' },
       ],
       onFilter: (value: boolean | React.Key, record: Alert) => record.type === value,
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
       sorter: (a: Alert, b: Alert) => moment(a.timestamp).diff(moment(b.timestamp)),
     },
     {
-      title: 'Status',
+      title: 'Статус',
       key: 'read',
       render: (_: any, record: Alert) => (
         <Badge
@@ -184,13 +184,13 @@ const Alerts = () => {
         />
       ),
       filters: [
-        { text: 'Read', value: true },
-        { text: 'Unread', value: false },
+        { text: 'Прочитано', value: true },
+        { text: 'Непрочитано', value: false },
       ],
       onFilter: (value: boolean | React.Key, record: Alert) => record.read === value,
     },
     {
-      title: 'Actions',
+      title: 'Действия',
       key: 'actions',
       render: (_: any, record: Alert) => (
         <Space size="middle">
@@ -199,7 +199,7 @@ const Alerts = () => {
             icon={<EyeOutlined />}
             onClick={() => setSelectedAlert(record)}
           >
-            View
+            Просмотр
           </Button>
           {!record.read && (
             <Button
@@ -208,7 +208,7 @@ const Alerts = () => {
               onClick={() => markAsReadMutation.mutate(record.id)}
               loading={markAsReadMutation.isPending}
             >
-              Mark Read
+              Отметить прочитанным
             </Button>
           )}
           <Button
@@ -216,7 +216,7 @@ const Alerts = () => {
             icon={<DownloadOutlined />}
             onClick={() => console.log('Download alert details:', record)}
           >
-            Export
+            Экспорт
           </Button>
         </Space>
       ),
@@ -244,7 +244,7 @@ const Alerts = () => {
   const handleClearAll = () => {
     Modal.confirm({
       title: 'Clear All Alerts',
-      content: 'Are you sure you want to clear all alerts?',
+      content: 'Вы уверены, что хотите очистить все оповещения?',
       onOk: () => clearAllMutation.mutate(),
     });
   };
@@ -254,7 +254,7 @@ const Alerts = () => {
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <AlertOutlined /> Alerts
+            <AlertOutlined /> Оповещения
           </Title>
         </Col>
         <Col>
@@ -264,14 +264,14 @@ const Alerts = () => {
               onClick={handleClearAll}
               loading={clearAllMutation.isPending}
             >
-              Clear All
+              Очистить все
             </Button>
             <RangePicker onChange={handleDateRangeChange} />
             <Button
               icon={<FilterOutlined />}
               onClick={() => setFilterVisible(!filterVisible)}
             >
-              Filters
+              Фильтры
             </Button>
           </Space>
         </Col>
@@ -283,7 +283,7 @@ const Alerts = () => {
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by type"
+                placeholder="Фильтр по типу"
                 onChange={(value) => handleFilterChange({ type: value })}
                 allowClear
               >
@@ -296,7 +296,7 @@ const Alerts = () => {
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by status"
+                placeholder="Фильтр по статусу"
                 onChange={(value) => handleFilterChange({ read: value })}
                 allowClear
               >
@@ -306,7 +306,7 @@ const Alerts = () => {
             </Col>
             <Col span={8}>
               <Input
-                placeholder="Search alerts..."
+                placeholder="Поиск оповещений..."
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleFilterChange({ search: e.target.value })}
               />
@@ -327,7 +327,7 @@ const Alerts = () => {
       </Card>
 
       <Modal
-        title="Alert Details"
+        title="Детали оповещения"
         open={!!selectedAlert}
         onCancel={() => setSelectedAlert(null)}
         footer={[
@@ -340,16 +340,16 @@ const Alerts = () => {
           <div>
             <Typography.Title level={4}>{selectedAlert.title}</Typography.Title>
             <Typography.Paragraph>
-              <strong>Message:</strong> {selectedAlert.message}
+              <strong>Сообщение:</strong> {selectedAlert.message}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Type:</strong> {selectedAlert.type.toUpperCase()}
+              <strong>Тип:</strong> {selectedAlert.type.toUpperCase()}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Timestamp:</strong> {selectedAlert.timestamp}
+              <strong>Время:</strong> {selectedAlert.timestamp}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Status:</strong> {selectedAlert.read ? 'Read' : 'Unread'}
+              <strong>Статус:</strong> {selectedAlert.read ? 'Прочитано' : 'Непрочитано'}
             </Typography.Paragraph>
           </div>
         )}

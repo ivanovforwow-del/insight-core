@@ -35,7 +35,7 @@ import type { Video } from '@/types';
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-// Define the video player props
+// Определение пропсов видеоплеера
 interface VideoPlayerProps {
   video: Video;
 }
@@ -68,7 +68,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
     };
 
     playerRef.current = videojs(videoRef.current, videoJsOptions, () => {
-      console.log('Player is ready');
+      console.log('Плеер готов');
     });
 
     const player = playerRef.current;
@@ -149,9 +149,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <VideoCameraOutlined /> Video Player
+            <VideoCameraOutlined /> Видеоплеер
           </Title>
-          <Text type="secondary">Playing: {video.name}</Text>
+          <Text type="secondary">Воспроизведение: {video.name}</Text>
         </Col>
         <Col>
           <Space>
@@ -258,39 +258,39 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
             </div>
           </Col>
           <Col span={6}>
-            <Card title="Video Info" size="small">
+            <Card title="Информация о видео" size="small">
               <Space direction="vertical" style={{ width: '100%' }}>
                 <div>
-                  <Text strong>Camera:</Text>
+                  <Text strong>Камера:</Text>
                   <Text> {video.cameraName}</Text>
                 </div>
                 <div>
-                  <Text strong>Start Time:</Text>
+                  <Text strong>Время начала:</Text>
                   <Text> {video.startTime}</Text>
                 </div>
                 <div>
-                  <Text strong>End Time:</Text>
+                  <Text strong>Время окончания:</Text>
                   <Text> {video.endTime}</Text>
                 </div>
                 <div>
-                  <Text strong>Duration:</Text>
+                  <Text strong>Длительность:</Text>
                   <Text> {formatTime(video.duration)}</Text>
                 </div>
                 <div>
-                  <Text strong>Size:</Text>
-                  <Text> {(video.size / (1024 * 1024)).toFixed(2)} MB</Text>
+                  <Text strong>Размер:</Text>
+                  <Text> {(video.size / (1024 * 1024)).toFixed(2)} МБ</Text>
                 </div>
                 <div>
-                  <Text strong>Format:</Text>
+                  <Text strong>Формат:</Text>
                   <Text> {video.format.toUpperCase()}</Text>
                 </div>
               </Space>
             </Card>
 
-            <Card title="Playback Settings" size="small" style={{ marginTop: 16 }}>
+            <Card title="Настройки воспроизведения" size="small" style={{ marginTop: 16 }}>
               <Space direction="vertical" style={{ width: '100%' }}>
                 <div>
-                  <Text>Volume</Text>
+                  <Text>Громкость</Text>
                   <Slider
                     min={0}
                     max={1}
@@ -300,7 +300,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
                   />
                 </div>
                 <div>
-                  <Text>Playback Speed</Text>
+                  <Text>Скорость воспроизведения</Text>
                   <Select
                     value={playbackRate}
                     onChange={handlePlaybackRateChange}
@@ -319,18 +319,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
       </Card>
 
       <Modal
-        title="Video Settings"
+        title="Настройки видео"
         open={showSettings}
         onCancel={() => setShowSettings(false)}
         footer={[
           <Button key="close" onClick={() => setShowSettings(false)}>
-            Close
+            Закрыть
           </Button>,
         ]}
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <div>
-            <Text>Volume</Text>
+            <Text>Громкость</Text>
             <Slider
               min={0}
               max={1}
@@ -340,7 +340,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
             />
           </div>
           <div>
-            <Text>Playback Speed</Text>
+            <Text>Скорость воспроизведения</Text>
             <Select
               value={playbackRate}
               onChange={handlePlaybackRateChange}
@@ -353,7 +353,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
             </Select>
           </div>
           <div>
-            <Text>Auto-play</Text>
+            <Text>Автовоспроизведение</Text>
             <Switch defaultChecked />
           </div>
         </Space>
@@ -363,7 +363,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
 };
 
 const VideoPlayerPage: React.FC = () => {
-  // Mock video data
+  // Тестовые данные видео
   const mockVideo: Video = {
     id: 1,
     name: 'Test Video',

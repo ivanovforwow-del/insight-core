@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* параметры конфигурации здесь */
   output: 'export', // Enable static export
   trailingSlash: true, // Add trailing slashes to URLs
   images: {
@@ -11,9 +11,9 @@ const nextConfig: NextConfig = {
     REACT_APP_API_URL: process.env.REACT_APP_API_URL || '/api',
   },
   webpack: (config, { isServer }) => {
-    // Important: Return the modified config
+    // Важно: Возвращаем измененную конфигурацию
     if (!isServer) {
-      // Set webpack externals for video.js to work in Next.js
+      // Устанавливаем внешние зависимости webpack для работы video.js в Next.js
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
@@ -23,12 +23,12 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
-  // Explicitly enable webpack mode and disable turbopack
+  // Явно включаем режим webpack и отключаем turbopack
   experimental: {
     webpackBuildWorker: true,
   },
-  // Explicitly disable turbopack to force webpack
-  // We use an empty object to satisfy the type requirement while disabling turbopack
+  // Явно отключаем turbopack для принудительного использования webpack
+  // Мы используем пустой объект, чтобы удовлетворить требования типа при отключении turbopack
   turbopack: {} as any,
 };
 

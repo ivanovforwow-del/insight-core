@@ -38,19 +38,19 @@ const Layout = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  // Mock user data - in real app this would come from auth context
+  // Данные пользователя для тестирования - в реальном приложении будут из контекста аутентификации
   const user = {
-    name: 'Admin User',
+    name: 'Администратор',
     email: 'admin@insightcore.com',
   };
 
-  // Mock notifications data
+  // Данные уведомлений для тестирования
   const { data: notifications = [] } = useQuery<Alert[]>({
     queryKey: ['notifications'],
     queryFn: async () => [
-      { id: 1, title: 'New event detected', message: 'Person detected in restricted area', timestamp: '2 min ago', type: 'warning', read: false },
-      { id: 2, title: 'System alert', message: 'Camera offline: Entrance Cam 1', timestamp: '5 min ago', type: 'error', read: false },
-      { id: 3, title: 'Analytics update', message: 'Daily report generated', timestamp: '1 hour ago', type: 'info', read: false },
+      { id: 1, title: 'Обнаружено новое событие', message: 'Обнаружен человек в запретной зоне', timestamp: '2 мин назад', type: 'warning', read: false },
+      { id: 2, title: 'Системное предупреждение', message: 'Камера отключена: Входная камера 1', timestamp: '5 мин назад', type: 'error', read: false },
+      { id: 3, title: 'Обновление аналитики', message: 'Сформирован ежедневный отчет', timestamp: '1 час назад', type: 'info', read: false },
     ],
     staleTime: 30000, // 30 seconds
   });
@@ -59,44 +59,44 @@ const Layout = () => {
     {
       key: 'dashboard',
       icon: <DashboardOutlined />,
-      label: <Link to="/dashboard">Dashboard</Link>,
+      label: <Link to="/dashboard">Панель управления</Link>,
     },
     {
       key: 'cameras',
       icon: <VideoCameraOutlined />,
-      label: <Link to="/cameras">Cameras</Link>,
+      label: <Link to="/cameras">Камеры</Link>,
     },
     {
       key: 'events',
       icon: <AlertOutlined />,
-      label: <Link to="/events">Events</Link>,
+      label: <Link to="/events">События</Link>,
     },
     {
       key: 'analytics',
       icon: <BarChartOutlined />,
-      label: <Link to="/analytics">Analytics</Link>,
+      label: <Link to="/analytics">Аналитика</Link>,
     },
     {
       key: 'alerts',
       icon: <BellOutlined />,
-      label: <Link to="/alerts">Alerts</Link>,
+      label: <Link to="/alerts">Оповещения</Link>,
     },
     {
       key: 'settings',
       icon: <SettingOutlined />,
-      label: <Link to="/settings">Settings</Link>,
+      label: <Link to="/settings">Настройки</Link>,
     },
   ];
 
   const userMenuItems = [
     {
       key: 'profile',
-      label: 'Profile',
+      label: 'Профиль',
       icon: <UserOutlined />,
     },
     {
       key: 'logout',
-      label: 'Logout',
+      label: 'Выйти',
       icon: <LogoutOutlined />,
       onClick: () => {
         // Handle logout
@@ -166,10 +166,10 @@ const Layout = () => {
               overlay={
                 <List
                   size="small"
-                  header={<Text strong>Notifications</Text>}
+                  header={<Text strong>Уведомления</Text>}
                   footer={
                     <Button type="link" size="small" onClick={() => setNotificationsVisible(false)}>
-                      View All
+                      Просмотреть все
                     </Button>
                   }
                   bordered
@@ -234,7 +234,7 @@ const Layout = () => {
 
       {/* Notifications drawer */}
       <Drawer
-        title="Notifications"
+        title="Уведомления"
         placement="right"
         closable
         onClose={() => setNotificationsVisible(false)}

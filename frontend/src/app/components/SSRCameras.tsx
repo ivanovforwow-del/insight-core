@@ -36,18 +36,18 @@ const SSRCameras: React.FC<SSRCamerasProps> = ({ cameras, loading = false }) => 
 
   const columns = [
     {
-      title: 'Name',
+      title: 'Имя',
       dataIndex: 'name',
       key: 'name',
       sorter: (a: Camera, b: Camera) => a.name.localeCompare(b.name),
     },
     {
-      title: 'Location',
+      title: 'Местоположение',
       dataIndex: 'location',
       key: 'location',
     },
     {
-      title: 'Status',
+      title: 'Статус',
       dataIndex: 'status',
       key: 'status',
       render: (status: string) => (
@@ -56,38 +56,38 @@ const SSRCameras: React.FC<SSRCamerasProps> = ({ cameras, loading = false }) => 
         </Tag>
       ),
       filters: [
-        { text: 'Active', value: 'active' },
-        { text: 'Inactive', value: 'inactive' },
-        { text: 'Error', value: 'error' },
-        { text: 'Maintenance', value: 'maintenance' },
+        { text: 'Активна', value: 'active' },
+        { text: 'Неактивна', value: 'inactive' },
+        { text: 'Ошибка', value: 'error' },
+        { text: 'Обслуживание', value: 'maintenance' },
       ],
       onFilter: (value: boolean | React.Key, record: Camera) => record.status === value,
     },
     {
-      title: 'Vendor',
+      title: 'Производитель',
       dataIndex: 'vendor',
       key: 'vendor',
     },
     {
-      title: 'Zones',
+      title: 'Зоны',
       dataIndex: 'zones',
       key: 'zones',
       sorter: (a: Camera, b: Camera) => a.zones - b.zones,
     },
     {
-      title: 'Lines',
+      title: 'Линии',
       dataIndex: 'lines',
       key: 'lines',
       sorter: (a: Camera, b: Camera) => a.lines - b.lines,
     },
     {
-      title: 'Rules',
+      title: 'Правила',
       dataIndex: 'rules',
       key: 'rules',
       sorter: (a: Camera, b: Camera) => a.rules - b.rules,
     },
     {
-      title: 'Actions',
+      title: 'Действия',
       key: 'actions',
       render: (_: any, record: Camera) => (
         <Space size="middle">
@@ -96,14 +96,14 @@ const SSRCameras: React.FC<SSRCamerasProps> = ({ cameras, loading = false }) => 
             icon={<EyeOutlined />}
             onClick={() => console.log('View stream for:', record)}
           >
-            Stream
+            Поток
           </Button>
           <Button
             type="link"
             icon={<EditOutlined />}
             onClick={() => console.log('Edit camera:', record)}
           >
-            Edit
+            Редактировать
           </Button>
           <Button
             type="link"
@@ -111,7 +111,7 @@ const SSRCameras: React.FC<SSRCamerasProps> = ({ cameras, loading = false }) => 
             icon={<DeleteOutlined />}
             onClick={() => console.log('Delete camera:', record.id)}
           >
-            Delete
+            Удалить
           </Button>
         </Space>
       ),
@@ -123,7 +123,7 @@ const SSRCameras: React.FC<SSRCamerasProps> = ({ cameras, loading = false }) => 
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <VideoCameraOutlined /> Cameras
+            <VideoCameraOutlined /> Камеры
           </Title>
         </Col>
         <Col>
@@ -132,7 +132,7 @@ const SSRCameras: React.FC<SSRCamerasProps> = ({ cameras, loading = false }) => 
             icon={<EditOutlined />}
             onClick={() => console.log('Add Camera clicked')}
           >
-            Add Camera
+            Добавить камеру
           </Button>
         </Col>
       </Row>

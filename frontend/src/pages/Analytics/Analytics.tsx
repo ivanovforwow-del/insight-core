@@ -50,7 +50,7 @@ const Analytics = () => {
   const [timeRange, setTimeRange] = React.useState<string>('7d');
   const [dateRange, setDateRange] = React.useState<[string, string] | null>(null);
 
-  // Mock analytics data
+  // Данные аналитики для тестирования
   const { data: analyticsData } = useQuery<AnalyticsData>({
     queryKey: ['analytics-data', timeRange, dateRange],
     queryFn: async () => ({
@@ -113,7 +113,7 @@ const Analytics = () => {
     { date: '2023-12-07', events: 31 },
   ];
 
-  // Mock recent events
+  // Последние события для тестирования
   const { data: recentEvents = [] } = useQuery<Event[]>({
     queryKey: ['recent-events', timeRange, dateRange],
     queryFn: async () => [
@@ -183,17 +183,17 @@ const Analytics = () => {
 
   const statColumns = [
     {
-      title: 'Metric',
+      title: 'Метрика',
       dataIndex: 'metric',
       key: 'metric',
     },
     {
-      title: 'Value',
+      title: 'Значение',
       dataIndex: 'value',
       key: 'value',
     },
     {
-      title: 'Change',
+      title: 'Изменение',
       dataIndex: 'change',
       key: 'change',
       render: (change: number) => (
@@ -207,37 +207,37 @@ const Analytics = () => {
   const statData = [
     {
       key: 1,
-      metric: 'Total Cameras',
+      metric: 'Всего камер',
       value: analyticsData?.totalCameras || 0,
       change: 5,
     },
     {
       key: 2,
-      metric: 'Active Cameras',
+      metric: 'Активных камер',
       value: analyticsData?.activeCameras || 0,
       change: 3,
     },
     {
       key: 3,
-      metric: 'Total Events',
+      metric: 'Всего событий',
       value: analyticsData?.totalEvents || 0,
       change: 12,
     },
     {
       key: 4,
-      metric: 'Events Today',
+      metric: 'Событий сегодня',
       value: analyticsData?.eventsToday || 0,
       change: -2,
     },
     {
       key: 5,
-      metric: 'Alerts Today',
+      metric: 'Оповещений сегодня',
       value: analyticsData?.alertsToday || 0,
       change: 8,
     },
     {
       key: 6,
-      metric: 'Total Videos',
+      metric: 'Всего видео',
       value: analyticsData?.totalVideos || 0,
       change: 7,
     },
@@ -250,12 +250,12 @@ const Analytics = () => {
       key: 'id',
     },
     {
-      title: 'Camera',
+      title: 'Камера',
       dataIndex: 'cameraName',
       key: 'cameraName',
     },
     {
-      title: 'Object',
+      title: 'Объект',
       dataIndex: 'objectType',
       key: 'objectType',
       render: (text: string) => (
@@ -269,12 +269,12 @@ const Analytics = () => {
       ),
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
     },
     {
-      title: 'Confidence',
+      title: 'Достоверность',
       dataIndex: 'confidence',
       key: 'confidence',
       render: (confidence: number) => (
@@ -284,7 +284,7 @@ const Analytics = () => {
       ),
     },
     {
-      title: 'Severity',
+      title: 'Важность',
       dataIndex: 'severity',
       key: 'severity',
       render: (severity: string) => (
@@ -298,7 +298,7 @@ const Analytics = () => {
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <AreaChartOutlined /> Analytics
+            <AreaChartOutlined /> Аналитика
           </Title>
         </Col>
         <Col>
@@ -309,10 +309,10 @@ const Analytics = () => {
               style={{ width: 120 }}
               onChange={handleTimeRangeChange}
             >
-              <Option value="1d">1 Day</Option>
-              <Option value="7d">7 Days</Option>
-              <Option value="30d">30 Days</Option>
-              <Option value="90d">90 Days</Option>
+              <Option value="1d">1 день</Option>
+              <Option value="7d">7 дней</Option>
+              <Option value="30d">30 дней</Option>
+              <Option value="90d">90 дней</Option>
             </Select>
           </Space>
         </Col>
@@ -323,7 +323,7 @@ const Analytics = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Total Cameras"
+              title="Всего камер"
               value={analyticsData?.totalCameras || 0}
               prefix={<VideoCameraOutlined />}
               suffix={`/ ${analyticsData?.activeCameras || 0} active`}
@@ -333,7 +333,7 @@ const Analytics = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Total Events"
+              title="Всего событий"
               value={analyticsData?.totalEvents || 0}
               prefix={<AlertOutlined />}
             />
@@ -342,7 +342,7 @@ const Analytics = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Events Today"
+              title="Событий сегодня"
               value={analyticsData?.eventsToday || 0}
               prefix={<ClockCircleOutlined />}
             />
@@ -351,7 +351,7 @@ const Analytics = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Alerts Today"
+              title="Оповещений сегодня"
               value={analyticsData?.alertsToday || 0}
               prefix={<CheckCircleOutlined />}
             />
@@ -360,7 +360,7 @@ const Analytics = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Total Videos"
+              title="Всего видео"
               value={analyticsData?.totalVideos || 0}
               prefix={<VideoCameraAddOutlined />}
             />
@@ -369,7 +369,7 @@ const Analytics = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="System Uptime"
+              title="Время работы системы"
               value={analyticsData?.systemUptime || '0%'}
               prefix={<CheckCircleOutlined />}
             />
@@ -380,7 +380,7 @@ const Analytics = () => {
       {/* Charts Section */}
       <Row gutter={16} style={{ marginBottom: 24 }}>
         <Col span={16}>
-          <Card title="Events Over Time" style={{ height: 300 }}>
+          <Card title="События во времени" style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={eventsByDay}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -399,7 +399,7 @@ const Analytics = () => {
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="Events by Type" style={{ height: 300 }}>
+          <Card title="События по типам" style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -430,7 +430,7 @@ const Analytics = () => {
 
       <Row gutter={16} style={{ marginBottom: 24 }}>
         <Col span={12}>
-          <Card title="Events by Hour" style={{ height: 300 }}>
+          <Card title="События по часам" style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={eventsByHour}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -444,7 +444,7 @@ const Analytics = () => {
           </Card>
         </Col>
         <Col span={12}>
-          <Card title="Event Distribution" style={{ height: 300 }}>
+          <Card title="Распределение событий" style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={eventsByType}
@@ -466,7 +466,7 @@ const Analytics = () => {
       {/* Recent Events */}
       <Row gutter={16}>
         <Col span={24}>
-          <Card title="Recent Events">
+          <Card title="Последние события">
             <Table
               columns={eventColumns}
               dataSource={recentEvents}

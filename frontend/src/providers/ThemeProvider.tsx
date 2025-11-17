@@ -14,24 +14,24 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [theme, setThemeState] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    // Check for saved theme in localStorage
+    // Проверка сохраненной темы в localStorage
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     if (savedTheme) {
       setThemeState(savedTheme);
     } else {
-      // Check for system preference
+      // Проверка системных настроек
       const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setThemeState(systemPrefersDark ? 'dark' : 'light');
     }
   }, []);
 
   useEffect(() => {
-    // Apply theme to document
+    // Применение темы к документу
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
     document.documentElement.style.colorScheme = theme;
 
-    // Save theme to localStorage
+    // Сохранение темы в localStorage
     localStorage.setItem('theme', theme);
   }, [theme]);
 
@@ -53,7 +53,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    throw new Error('useTheme должен использоваться внутри ThemeProvider');
   }
   return context;
 };

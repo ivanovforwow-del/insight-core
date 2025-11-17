@@ -1,7 +1,7 @@
 {
   "name": "insightcore-frontend",
   "version": "1.0",
-  "description": "Frontend for InsightCore video analytics platform",
+  "description": "Фронтенд для платформы видеоаналитики InsightCore",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -57,6 +57,6 @@
     "computer-vision",
     "ant-design"
   ],
-  "author": "InsightCore Team",
+  "author": "Команда InsightCore",
   "license": "MIT"
 }

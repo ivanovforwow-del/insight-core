@@ -35,7 +35,7 @@ const Events = () => {
   const [filterVisible, setFilterVisible] = useState(false);
   const [filters, setFilters] = useState<Record<string, any>>({});
 
-  // Mock events data
+  // Данные событий для тестирования
   const { data: events = [], isLoading } = useQuery<Event[]>({
     queryKey: ['events', filters],
     queryFn: async () => [
@@ -145,19 +145,19 @@ const Events = () => {
       sorter: (a: Event, b: Event) => a.id - b.id,
     },
     {
-      title: 'Rule',
+      title: 'Правило',
       dataIndex: ['metadata', 'rule'],
       key: 'rule',
       sorter: (a: Event, b: Event) => (a.metadata?.rule || '').localeCompare(b.metadata?.rule || ''),
     },
     {
-      title: 'Camera',
+      title: 'Камера',
       dataIndex: 'cameraName',
       key: 'cameraName',
       sorter: (a: Event, b: Event) => a.cameraName.localeCompare(b.cameraName),
     },
     {
-      title: 'Object',
+      title: 'Объект',
       dataIndex: 'objectType',
       key: 'objectType',
       render: (objectType: string) => (
@@ -168,20 +168,20 @@ const Events = () => {
       sorter: (a: Event, b: Event) => a.objectType.localeCompare(b.objectType),
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
       sorter: (a: Event, b: Event) => moment(a.timestamp).diff(moment(b.timestamp)),
     },
     {
-      title: 'Confidence',
+      title: 'Достоверность',
       dataIndex: 'confidence',
       key: 'confidence',
       render: (confidence: number) => `${(confidence * 100).toFixed(1)}%`,
       sorter: (a: Event, b: Event) => a.confidence - b.confidence,
     },
     {
-      title: 'Severity',
+      title: 'Важность',
       dataIndex: 'severity',
       key: 'severity',
       render: (severity: string) => (
@@ -191,15 +191,15 @@ const Events = () => {
       ),
       sorter: (a: Event, b: Event) => a.severity.localeCompare(b.severity),
       filters: [
-        { text: 'Low', value: 'low' },
-        { text: 'Medium', value: 'medium' },
-        { text: 'High', value: 'high' },
-        { text: 'Critical', value: 'critical' },
+        { text: 'Низкая', value: 'low' },
+        { text: 'Средняя', value: 'medium' },
+        { text: 'Высокая', value: 'high' },
+        { text: 'Критическая', value: 'critical' },
       ],
       onFilter: (value: boolean | React.Key, record: Event) => record.severity === value,
     },
     {
-      title: 'Status',
+      title: 'Статус',
       key: 'resolved',
       render: (_: any, record: Event) => (
         <Badge
@@ -208,13 +208,13 @@ const Events = () => {
         />
       ),
       filters: [
-        { text: 'Resolved', value: true },
-        { text: 'Pending', value: false },
+        { text: 'Решено', value: true },
+        { text: 'В ожидании', value: false },
       ],
       onFilter: (value: boolean | React.Key, record: Event) => record.metadata?.resolved === value,
     },
     {
-      title: 'Actions',
+      title: 'Действия',
       key: 'actions',
       render: (_: any, record: Event) => (
         <Space size="middle">
@@ -223,14 +223,14 @@ const Events = () => {
             icon={<EyeOutlined />}
             onClick={() => handleViewEvent(record)}
           >
-            View
+            Просмотр
           </Button>
           <Button
             type="link"
             icon={<DownloadOutlined />}
             onClick={() => handleDownloadClip(record)}
           >
-            Clip
+            Клип
           </Button>
         </Space>
       ),
@@ -268,7 +268,7 @@ const Events = () => {
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <AlertOutlined /> Events
+            <AlertOutlined /> События
           </Title>
         </Col>
         <Col>
@@ -278,7 +278,7 @@ const Events = () => {
               icon={<FilterOutlined />}
               onClick={() => setFilterVisible(!filterVisible)}
             >
-              Filters
+              Фильтры
             </Button>
           </Space>
         </Col>
@@ -290,7 +290,7 @@ const Events = () => {
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by camera"
+                placeholder="Фильтр по камере"
                 onChange={(value) => handleFilterChange({ camera: value })}
                 allowClear
               >
@@ -304,7 +304,7 @@ const Events = () => {
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by object type"
+                placeholder="Фильтр по типу объекта"
                 onChange={(value) => handleFilterChange({ objectClass: value })}
                 allowClear
               >
@@ -317,7 +317,7 @@ const Events = () => {
             </Col>
             <Col span={8}>
               <Input
-                placeholder="Search events..."
+                placeholder="Поиск событий..."
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleFilterChange({ search: e.target.value })}
               />

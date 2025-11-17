@@ -4,7 +4,7 @@ import { Event } from '../types';
 const EVENT_API_ENDPOINT = '/events';
 
 export const eventService = {
-  // Get all events
+  // Получить все события
   getEvents: async (params?: {
     page?: number;
     limit?: number;
@@ -19,13 +19,13 @@ export const eventService = {
     return response.data;
   },
 
-  // Get event by ID
+  // Получить событие по ID
   getEventById: async (id: number): Promise<Event> => {
     const response = await apiClient.get<Event>(`${EVENT_API_ENDPOINT}/${id}`);
     return response.data;
   },
 
-  // Get recent events
+  // Получить последние события
   getRecentEvents: async (limit: number = 10): Promise<Event[]> => {
     const response = await apiClient.get<Event[]>(`${EVENT_API_ENDPOINT}/recent`, { 
       params: { limit } 
@@ -33,7 +33,7 @@ export const eventService = {
     return response.data;
   },
 
-  // Get events by camera
+  // Получить события по камере
   getEventsByCamera: async (cameraId: number, params?: {
     page?: number;
     limit?: number;
@@ -49,7 +49,7 @@ export const eventService = {
     return response.data;
   },
 
-  // Get events statistics
+  // Получить статистику событий
   getEventsStats: async (params?: {
     startDate?: string;
     endDate?: string;
@@ -69,7 +69,7 @@ export const eventService = {
     return response.data;
   },
 
-  // Update event status
+  // Обновить статус события
   updateEventStatus: async (id: number, resolved: boolean): Promise<Event> => {
     const response = await apiClient.patch<Event>(`${EVENT_API_ENDPOINT}/${id}/status`, {
       resolved,
@@ -77,7 +77,7 @@ export const eventService = {
     return response.data;
   },
 
-  // Delete event
+  // Удалить событие
   deleteEvent: async (id: number): Promise<void> => {
     await apiClient.delete(`${EVENT_API_ENDPOINT}/${id}`);
   },

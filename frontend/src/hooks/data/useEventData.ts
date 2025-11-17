@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { eventService } from '../../services/eventService';
 import { Event } from '../../types';
 
-// Query keys for event data
+// Ключи запросов для данных событий
 const EVENT_QUERY_KEYS = {
   all: ['events'] as const,
   lists: () => [...EVENT_QUERY_KEYS.all, 'list'] as const,
@@ -43,7 +43,7 @@ export const useRecentEvents = (limit: number = 10) => {
   return useQuery({
     queryKey: EVENT_QUERY_KEYS.recent(limit),
     queryFn: () => eventService.getRecentEvents(limit),
-    staleTime: 60 * 100, // 1 minute
+    staleTime: 60 * 1000, // 1 минута
   });
 };
 
@@ -59,7 +59,7 @@ export const useEventsByCamera = (cameraId: number, params?: {
     queryKey: EVENT_QUERY_KEYS.byCamera(cameraId, params),
     queryFn: () => eventService.getEventsByCamera(cameraId, params),
     enabled: !!cameraId,
-    staleTime: 30 * 100, // 30 seconds
+    staleTime: 30 * 100, // 30 секунд
   });
 };
 

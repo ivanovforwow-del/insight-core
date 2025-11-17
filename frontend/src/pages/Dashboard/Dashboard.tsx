@@ -15,7 +15,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { AnalyticsData, EventByType, EventByHour, Event } from '../../types';
 
 const Dashboard = () => {
-  // Mock dashboard statistics
+  // Статистика панели управления для тестирования
   const { data: stats } = useQuery<AnalyticsData>({
     queryKey: ['dashboard-stats'],
     queryFn: async () => ({
@@ -30,7 +30,7 @@ const Dashboard = () => {
     }),
   });
 
-  // Mock recent events
+  // Последние события для тестирования
   const { data: recentEvents = [] } = useQuery<Event[]>({
     queryKey: ['recent-events'],
     queryFn: async () => [
@@ -95,12 +95,12 @@ const Dashboard = () => {
       key: 'id',
     },
     {
-      title: 'Camera',
+      title: 'Камера',
       dataIndex: 'cameraName',
       key: 'cameraName',
     },
     {
-      title: 'Object',
+      title: 'Объект',
       dataIndex: 'objectType',
       key: 'objectType',
       render: (text: string) => (
@@ -114,12 +114,12 @@ const Dashboard = () => {
       ),
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
     },
     {
-      title: 'Confidence',
+      title: 'Достоверность',
       dataIndex: 'confidence',
       key: 'confidence',
       render: (confidence: number) => (
@@ -129,7 +129,7 @@ const Dashboard = () => {
       ),
     },
     {
-      title: 'Severity',
+      title: 'Важность',
       dataIndex: 'severity',
       key: 'severity',
       render: (severity: string) => (
@@ -140,14 +140,14 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Typography.Title level={2}>Dashboard</Typography.Title>
+      <Typography.Title level={2}>Панель управления</Typography.Title>
       
       {/* Statistics Cards */}
       <Row gutter={16} style={{ marginBottom: 24 }}>
         <Col span={6}>
           <Card>
             <Statistic
-              title="Total Cameras"
+              title="Всего камер"
               value={stats?.totalCameras || 0}
               prefix={<VideoCameraOutlined />}
               suffix={`/ ${stats?.activeCameras || 0} active`}
@@ -157,7 +157,7 @@ const Dashboard = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Total Events"
+              title="Всего событий"
               value={stats?.totalEvents || 0}
               prefix={<AlertOutlined />}
             />
@@ -166,7 +166,7 @@ const Dashboard = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Events Today"
+              title="Событий сегодня"
               value={stats?.eventsToday || 0}
               prefix={<ClockCircleOutlined />}
             />
@@ -175,7 +175,7 @@ const Dashboard = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Alerts Today"
+              title="Оповещений сегодня"
               value={stats?.alertsToday || 0}
               prefix={<CheckCircleOutlined />}
             />
@@ -185,7 +185,7 @@ const Dashboard = () => {
 
       <Row gutter={16} style={{ marginBottom: 24 }}>
         <Col span={16}>
-          <Card title="Events by Hour" style={{ height: 300 }}>
+          <Card title="События по часам" style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={eventsByHour}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -199,7 +199,7 @@ const Dashboard = () => {
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="Events by Type" style={{ height: 300 }}>
+          <Card title="События по типам" style={{ height: 300 }}>
             <ResponsiveContainer width="10%" height="100%">
               <PieChart>
                 <Pie
@@ -225,7 +225,7 @@ const Dashboard = () => {
 
       <Row gutter={16}>
         <Col span={24}>
-          <Card title="Recent Events">
+          <Card title="Последние события">
             <Table 
               columns={columns} 
               dataSource={recentEvents} 

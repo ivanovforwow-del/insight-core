@@ -4,7 +4,7 @@ import { Alert } from '../types';
 const ALERT_API_ENDPOINT = '/alerts';
 
 export const alertService = {
-  // Get all alerts
+  // Получить все оповещения
   getAlerts: async (params?: {
     page?: number;
     limit?: number;
@@ -18,19 +18,19 @@ export const alertService = {
     return response.data;
   },
 
-  // Get alert by ID
+  // Получить оповещение по ID
   getAlertById: async (id: number): Promise<Alert> => {
     const response = await apiClient.get<Alert>(`${ALERT_API_ENDPOINT}/${id}`);
     return response.data;
   },
 
-  // Get unread alerts count
+  // Получить количество непрочитанных оповещений
   getUnreadAlertsCount: async (): Promise<number> => {
     const response = await apiClient.get<{ count: number }>(`${ALERT_API_ENDPOINT}/unread`);
     return response.data.count;
   },
 
-  // Get recent alerts
+  // Получить последние оповещения
   getRecentAlerts: async (limit: number = 10): Promise<Alert[]> => {
     const response = await apiClient.get<Alert[]>(`${ALERT_API_ENDPOINT}/recent`, { 
       params: { limit } 
@@ -38,23 +38,23 @@ export const alertService = {
     return response.data;
   },
 
-  // Mark alert as read
+  // Отметить оповещение как прочитанное
  markAlertAsRead: async (id: number): Promise<Alert> => {
     const response = await apiClient.patch<Alert>(`${ALERT_API_ENDPOINT}/${id}/read`);
     return response.data;
   },
 
-  // Mark all alerts as read
+  // Отметить все оповещения как прочитанные
   markAllAlertsAsRead: async (): Promise<void> => {
     await apiClient.patch(`${ALERT_API_ENDPOINT}/read-all`);
   },
 
-  // Delete alert
+  // Удалить оповещение
   deleteAlert: async (id: number): Promise<void> => {
     await apiClient.delete(`${ALERT_API_ENDPOINT}/${id}`);
   },
 
-  // Delete all alerts
+  // Удалить все оповещения
   deleteAllAlerts: async (): Promise<void> => {
     await apiClient.delete(`${ALERT_API_ENDPOINT}/all`);
   },

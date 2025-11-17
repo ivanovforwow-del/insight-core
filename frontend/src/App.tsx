@@ -1,5 +1,5 @@
-// This file is no longer used as we're migrating to Next.js App Router
-// Keeping it for reference during the transition period
+// Этот файл больше не используется, так как мы переходим на Next.js App Router
+// Оставлен для справки в период перехода
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';

@@ -70,18 +70,18 @@ const AlertsPage = () => {
       sorter: (a: Alert, b: Alert) => a.id - b.id,
     },
     {
-      title: 'Title',
+      title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
       sorter: (a: Alert, b: Alert) => a.title.localeCompare(b.title),
     },
     {
-      title: 'Message',
+      title: 'Сообщение',
       dataIndex: 'message',
       key: 'message',
     },
     {
-      title: 'Type',
+      title: 'Тип',
       dataIndex: 'type',
       key: 'type',
       render: (type: string) => (
@@ -91,36 +91,36 @@ const AlertsPage = () => {
       ),
       sorter: (a: Alert, b: Alert) => a.type.localeCompare(b.type),
       filters: [
-        { text: 'Info', value: 'info' },
-        { text: 'Warning', value: 'warning' },
-        { text: 'Error', value: 'error' },
-        { text: 'Success', value: 'success' },
+        { text: 'Информация', value: 'info' },
+        { text: 'Предупреждение', value: 'warning' },
+        { text: 'Ошибка', value: 'error' },
+        { text: 'Успех', value: 'success' },
       ],
       onFilter: (value: boolean | React.Key, record: Alert) => record.type === value,
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
       sorter: (a: Alert, b: Alert) => moment(a.timestamp).diff(moment(b.timestamp)),
     },
     {
-      title: 'Status',
+      title: 'Статус',
       key: 'read',
       render: (_: any, record: Alert) => (
         <Badge
           status={record.read ? 'success' : 'error'}
-          text={record.read ? 'Read' : 'Unread'}
+          text={record.read ? 'Прочитано' : 'Непрочитано'}
         />
       ),
       filters: [
-        { text: 'Read', value: true },
-        { text: 'Unread', value: false },
+        { text: 'Прочитано', value: true },
+        { text: 'Непрочитано', value: false },
       ],
       onFilter: (value: boolean | React.Key, record: Alert) => record.read === value,
     },
     {
-      title: 'Actions',
+      title: 'Действия',
       key: 'actions',
       render: (_: any, record: Alert) => (
         <Space size="middle">
@@ -129,7 +129,7 @@ const AlertsPage = () => {
             icon={<EyeOutlined />}
             onClick={() => setSelectedAlert(record)}
           >
-            View
+            Просмотр
           </Button>
           {!record.read && (
             <Button
@@ -138,7 +138,7 @@ const AlertsPage = () => {
               onClick={() => markAsReadMutation.mutate(record.id)}
               loading={markAsReadMutation.isPending && markAsReadMutation.variables === record.id}
             >
-              Mark Read
+              Отметить прочитанным
             </Button>
           )}
           <Button
@@ -146,7 +146,7 @@ const AlertsPage = () => {
             icon={<DownloadOutlined />}
             onClick={() => console.log('Download alert details:', record)}
           >
-            Export
+            Экспорт
           </Button>
         </Space>
       ),
@@ -173,8 +173,8 @@ const AlertsPage = () => {
 
   const handleClearAll = () => {
     Modal.confirm({
-      title: 'Clear All Alerts',
-      content: 'Are you sure you want to clear all alerts?',
+      title: 'Очистить все оповещения',
+      content: 'Вы уверены, что хотите очистить все оповещения?',
       onOk: () => deleteAllAlertsMutation.mutate(),
     });
   };
@@ -184,7 +184,7 @@ const AlertsPage = () => {
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <AlertOutlined /> Alerts
+            <AlertOutlined /> Оповещения
           </Title>
         </Col>
         <Col>
@@ -194,14 +194,14 @@ const AlertsPage = () => {
               onClick={handleClearAll}
               loading={deleteAllAlertsMutation.isPending}
             >
-              Clear All
+              Очистить все
             </Button>
             <RangePicker onChange={handleDateRangeChange} />
             <Button
               icon={<FilterOutlined />}
               onClick={() => setFilterVisible(!filterVisible)}
             >
-              Filters
+              Фильтры
             </Button>
           </Space>
         </Col>
@@ -213,30 +213,30 @@ const AlertsPage = () => {
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by type"
+                placeholder="Фильтр по типу"
                 onChange={(value) => handleFilterChange({ type: value })}
                 allowClear
               >
-                <Option value="info">Info</Option>
-                <Option value="warning">Warning</Option>
-                <Option value="error">Error</Option>
-                <Option value="success">Success</Option>
+                <Option value="info">Информация</Option>
+                <Option value="warning">Предупреждение</Option>
+                <Option value="error">Ошибка</Option>
+                <Option value="success">Успех</Option>
               </Select>
             </Col>
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by status"
+                placeholder="Фильтр по статусу"
                 onChange={(value) => handleFilterChange({ read: value })}
                 allowClear
               >
-                <Option value={true}>Read</Option>
-                <Option value={false}>Unread</Option>
+                <Option value={true}>Прочитано</Option>
+                <Option value={false}>Непрочитано</Option>
               </Select>
             </Col>
             <Col span={8}>
               <Input
-                placeholder="Search alerts..."
+                placeholder="Поиск оповещений..."
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleFilterChange({ search: e.target.value })}
               />
@@ -262,12 +262,12 @@ const AlertsPage = () => {
       </Card>
 
       <Modal
-        title="Alert Details"
+        title="Детали оповещения"
         open={!!selectedAlert}
         onCancel={() => setSelectedAlert(null)}
         footer={[
           <Button key="close" onClick={() => setSelectedAlert(null)}>
-            Close
+            Закрыть
           </Button>,
         ]}
       >
@@ -275,16 +275,16 @@ const AlertsPage = () => {
           <div>
             <Typography.Title level={4}>{selectedAlert.title}</Typography.Title>
             <Typography.Paragraph>
-              <strong>Message:</strong> {selectedAlert.message}
+              <strong>Сообщение:</strong> {selectedAlert.message}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Type:</strong> {selectedAlert.type.toUpperCase()}
+              <strong>Тип:</strong> {selectedAlert.type.toUpperCase()}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Timestamp:</strong> {selectedAlert.timestamp}
+              <strong>Время:</strong> {selectedAlert.timestamp}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Status:</strong> {selectedAlert.read ? 'Read' : 'Unread'}
+              <strong>Статус:</strong> {selectedAlert.read ? 'Прочитано' : 'Непрочитано'}
             </Typography.Paragraph>
           </div>
         )}

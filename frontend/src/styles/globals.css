@@ -1,6 +1,6 @@
-/* Global styles for InsightCore frontend */
+/* Глобальные стили для фронтенда InsightCore */
 
-/* Reset and base styles */
+/* Сброс и базовые стили */
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +18,7 @@ body {
   background-color: #f0f2f5;
 }
 
-/* Ant Design customizations */
+/* Настройки Ant Design */
 .ant-layout {
   background-color: #f0f2f5;
 }
@@ -63,7 +63,7 @@ body {
   border-radius: 4px;
 }
 
-/* Custom utility classes */
+/* Пользовательские вспомогательные классы */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -217,7 +217,7 @@ body {
   font-size: 2.25rem;
 }
 
-/* Responsive design */
+/* Адаптивный дизайн */
 @media (max-width: 768px) {
   .ant-layout-content {
     margin: 16px 8px;
@@ -245,7 +245,7 @@ body {
   }
 }
 
-/* Animations */
+/* Анимации */
 .fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -274,7 +274,7 @@ body {
   }
 }
 
-/* Scrollbar customization */
+/* Настройка полосы прокрутки */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -294,7 +294,7 @@ body {
   background: #a8a8a8;
 }
 
-/* Print styles */
+/* Стили печати */
 @media print {
   body {
     background-color: #fff;

@@ -65,18 +65,18 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
 
   const columns = [
     {
-      title: 'Name',
+      title: 'Имя',
       dataIndex: 'name',
       key: 'name',
       sorter: (a: Camera, b: Camera) => a.name.localeCompare(b.name),
     },
     {
-      title: 'Location',
+      title: 'Местоположение',
       dataIndex: 'location',
       key: 'location',
     },
     {
-      title: 'Status',
+      title: 'Статус',
       dataIndex: 'status',
       key: 'status',
       render: (status: string) => (
@@ -85,38 +85,38 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
         </Tag>
       ),
       filters: [
-        { text: 'Active', value: 'active' },
-        { text: 'Inactive', value: 'inactive' },
-        { text: 'Error', value: 'error' },
-        { text: 'Maintenance', value: 'maintenance' },
+        { text: 'Активна', value: 'active' },
+        { text: 'Неактивна', value: 'inactive' },
+        { text: 'Ошибка', value: 'error' },
+        { text: 'Обслуживание', value: 'maintenance' },
       ],
       onFilter: (value: boolean | React.Key, record: Camera) => record.status === String(value),
     },
     {
-      title: 'Vendor',
+      title: 'Производитель',
       dataIndex: 'vendor',
       key: 'vendor',
     },
     {
-      title: 'Zones',
+      title: 'Зоны',
       dataIndex: 'zones',
       key: 'zones',
       sorter: (a: Camera, b: Camera) => a.zones - b.zones,
     },
     {
-      title: 'Lines',
+      title: 'Линии',
       dataIndex: 'lines',
       key: 'lines',
       sorter: (a: Camera, b: Camera) => a.lines - b.lines,
     },
     {
-      title: 'Rules',
+      title: 'Правила',
       dataIndex: 'rules',
       key: 'rules',
       sorter: (a: Camera, b: Camera) => a.rules - b.rules,
     },
     {
-      title: 'Actions',
+      title: 'Действия',
       key: 'actions',
       render: (_: any, record: Camera) => (
         <Space size="middle">
@@ -125,14 +125,14 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
             icon={<VideoCameraOutlined />}
             onClick={() => handleViewStream(record)}
           >
-            Stream
+            Поток
           </Button>
           <Button
             type="link"
             icon={<EditOutlined />}
             onClick={() => handleEdit(record)}
           >
-            Edit
+            Редактировать
           </Button>
           <Button
             type="link"
@@ -141,7 +141,7 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
             onClick={() => handleDelete(record.id)}
             loading={deleteCameraMutation.isPending && deleteCameraMutation.variables === record.id}
           >
-            Delete
+            Удалить
           </Button>
         </Space>
       ),
@@ -149,7 +149,7 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
   ];
 
   const handleViewStream = (camera: Camera) => {
-    // Open stream in modal or new tab
+    // Открытие потока в модальном окне или новой вкладке
     console.log('View stream for:', camera);
   };
 
@@ -168,8 +168,8 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
 
   const handleDelete = (id: number) => {
     Modal.confirm({
-      title: 'Delete Camera',
-      content: 'Are you sure you want to delete this camera?',
+      title: 'Удалить камеру',
+      content: 'Вы уверены, что хотите удалить эту камеру?',
       onOk: () => {
         deleteCameraMutation.mutate(id);
       },
@@ -210,7 +210,7 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <VideoCameraOutlined /> Cameras
+            <VideoCameraOutlined /> Камеры
           </Title>
         </Col>
         <Col>
@@ -220,7 +220,7 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
             onClick={handleAddCamera}
             loading={createCameraMutation.isPending}
           >
-            Add Camera
+            Добавить камеру
           </Button>
         </Col>
       </Row>
@@ -236,7 +236,7 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
       </Card>
 
       <Modal
-        title={editingCamera ? 'Edit Camera' : 'Add Camera'}
+        title={editingCamera ? 'Редактировать камеру' : 'Добавить камеру'}
         open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -250,8 +250,8 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
         >
           <Form.Item
             name="name"
-            label="Camera Name"
-            rules={[{ required: true, message: 'Please input camera name!' }]}
+            label="Имя камеры"
+            rules={[{ required: true, message: 'Пожалуйста, введите имя камеры!' }]}
           >
             <Input placeholder="Enter camera name" />
           </Form.Item>
@@ -259,38 +259,38 @@ const CamerasDataFetcher: React.FC<CamerasDataFetcherProps> = ({ initialFilters 
           <Form.Item
             name="rtspUrl"
             label="RTSP URL"
-            rules={[{ required: true, message: 'Please input RTSP URL!' }]}
+            rules={[{ required: true, message: 'Пожалуйста, введите RTSP URL!' }]}
           >
             <Input placeholder="rtsp://example.com/stream" />
           </Form.Item>
 
           <Form.Item
             name="location"
-            label="Location"
-            rules={[{ required: true, message: 'Please input location!' }]}
+            label="Местоположение"
+            rules={[{ required: true, message: 'Пожалуйста, введите местоположение!' }]}
           >
             <Input placeholder="Enter location" />
           </Form.Item>
 
           <Form.Item
             name="status"
-            label="Status"
-            rules={[{ required: true, message: 'Please select status!' }]}
+            label="Статус"
+            rules={[{ required: true, message: 'Пожалуйста, выберите статус!' }]}
           >
-            <Select placeholder="Select status">
-              <Option value="active">Active</Option>
-              <Option value="inactive">Inactive</Option>
-              <Option value="error">Error</Option>
-              <Option value="maintenance">Maintenance</Option>
+            <Select placeholder="Выберите статус">
+              <Option value="active">Активна</Option>
+              <Option value="inactive">Неактивна</Option>
+              <Option value="error">Ошибка</Option>
+              <Option value="maintenance">Обслуживание</Option>
             </Select>
           </Form.Item>
 
           <Form.Item
             name="vendor"
-            label="Vendor"
-            rules={[{ required: true, message: 'Please select vendor!' }]}
+            label="Производитель"
+            rules={[{ required: true, message: 'Пожалуйста, выберите производителя!' }]}
           >
-            <Select placeholder="Select vendor">
+            <Select placeholder="Выберите производителя">
               <Option value="Hikvision">Hikvision</Option>
               <Option value="Dahua">Dahua</Option>
               <Option value="Axis">Axis</Option>

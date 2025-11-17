@@ -1,6 +1,6 @@
-// Global types for InsightCore frontend
+// Глобальные типы для фронтенда InsightCore
 
-// React import for type definitions
+// Импорт React для определения типов
 import React from 'react';
 
 // User types

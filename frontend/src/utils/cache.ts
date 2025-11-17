@@ -1,7 +1,7 @@
-// Cache utilities for the InsightCore frontend
+// Утилиты кэширования для фронтенда InsightCore
 import React from 'react';
 
-// In-memory cache implementation
+// Реализация кэша в памяти
 class InMemoryCache<T = any> {
   private cache: Map<string, { data: T; timestamp: number; ttl: number }> = new Map();
 
@@ -55,7 +55,7 @@ class InMemoryCache<T = any> {
     return this.cache.size;
   }
 
-  // Garbage collection for expired items
+  // Сборка мусора для устаревших элементов
   gc(): void {
     const now = Date.now();
     for (const [key, item] of this.cache.entries()) {
@@ -66,7 +66,7 @@ class InMemoryCache<T = any> {
   }
 }
 
-// LocalStorage cache implementation
+// Реализация кэша в LocalStorage
 class LocalStorageCache<T = any> {
   private prefix: string;
 
@@ -78,7 +78,7 @@ class LocalStorageCache<T = any> {
     return `${this.prefix}:${key}`;
   }
 
-  set(key: string, data: T, ttl: number = 30000): void { // Default TTL: 5 minutes
+  set(key: string, data: T, ttl: number = 30000): void { // Стандартный TTL: 5 минут
     const item = {
       data,
       timestamp: Date.now(),
@@ -87,7 +87,7 @@ class LocalStorageCache<T = any> {
     try {
       localStorage.setItem(this.getKey(key), JSON.stringify(item));
     } catch (error) {
-      console.warn('Failed to set item in localStorage:', error);
+      console.warn('Не удалось установить элемент в localStorage:', error);
     }
  }
 
@@ -108,7 +108,7 @@ class LocalStorageCache<T = any> {
 
       return item.data;
     } catch (error) {
-      console.warn('Failed to get item from localStorage:', error);
+      console.warn('Не удалось получить элемент из localStorage:', error);
       return null;
     }
   }
@@ -123,7 +123,7 @@ class LocalStorageCache<T = any> {
       localStorage.removeItem(this.getKey(key));
       return true;
     } catch (error) {
-      console.warn('Failed to delete item from localStorage:', error);
+      console.warn('Не удалось удалить элемент из localStorage:', error);
       return false;
     }
   }
@@ -137,12 +137,12 @@ class LocalStorageCache<T = any> {
         }
       }
     } catch (error) {
-      console.warn('Failed to clear localStorage:', error);
+      console.warn('Не удалось очистить localStorage:', error);
     }
  }
 }
 
-// Cache manager combining both in-memory and localStorage
+// Менеджер кэша, объединяющий кэш в памяти и localStorage
 class CacheManager {
   private inMemoryCache: InMemoryCache;
   private localStorageCache: LocalStorageCache;
@@ -152,13 +152,13 @@ class CacheManager {
     this.localStorageCache = new LocalStorageCache();
   }
 
-  // Set value in both caches
+  // Установка значения в оба кэша
   set(key: string, data: any, ttl: number = 300000): void {
     this.inMemoryCache.set(key, data, ttl);
     this.localStorageCache.set(key, data, ttl);
   }
 
-  // Get value, prioritize in-memory cache
+  // Получение значения, с приоритетом кэша в памяти
   get<T = any>(key: string): T | null {
     // First check in-memory cache
     let data = this.inMemoryCache.get(key) as T | null;
@@ -166,10 +166,10 @@ class CacheManager {
       return data;
     }
 
-    // If not found in memory, check localStorage and populate memory
+    // Если не найдено в памяти, проверить localStorage и заполнить память
     data = this.localStorageCache.get(key) as T | null;
     if (data !== null) {
-      // Repopulate in-memory cache with data from localStorage
+      // Восстановить кэш в памяти данными из localStorage
       const localStorageItem = localStorage.getItem(`insightcore:${key}`);
       if (localStorageItem) {
         const item = JSON.parse(localStorageItem);
@@ -201,10 +201,10 @@ class CacheManager {
   }
 }
 
-// Create singleton instance
+// Создание одиночного экземпляра
 export const cacheManager = new CacheManager();
 
-// Cache hook for React components
+// Хук кэша для компонентов React
 export const useCache = <T>(key: string, initialValue?: T) => {
   const [cachedValue, setCachedValue] = React.useState<T>(() => {
     const cached = cacheManager.get<T>(key);

@@ -9,8 +9,8 @@ const SSRQueryProvider: React.FC<{ children: React.ReactNode }> = ({ children })
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 5 * 60 * 1000, // 5 minutes
-            gcTime: 10 * 60 * 1000, // 10 minutes
+            staleTime: 5 * 60 * 1000, // 5 минут
+            gcTime: 10 * 60 * 1000, // 10 минут
             retry: 3,
             retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
           },

@@ -70,19 +70,19 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
       sorter: (a: Event, b: Event) => a.id - b.id,
     },
     {
-      title: 'Rule',
+      title: 'Правило',
       dataIndex: ['metadata', 'rule'],
       key: 'rule',
       sorter: (a: Event, b: Event) => (a.metadata?.rule || '').localeCompare(b.metadata?.rule || ''),
     },
     {
-      title: 'Camera',
+      title: 'Камера',
       dataIndex: 'cameraName',
       key: 'cameraName',
       sorter: (a: Event, b: Event) => a.cameraName.localeCompare(b.cameraName),
     },
     {
-      title: 'Object',
+      title: 'Объект',
       dataIndex: 'objectType',
       key: 'objectType',
       render: (objectType: string) => (
@@ -93,20 +93,20 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
       sorter: (a: Event, b: Event) => a.objectType.localeCompare(b.objectType),
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
       sorter: (a: Event, b: Event) => moment(a.timestamp).diff(moment(b.timestamp)),
     },
     {
-      title: 'Confidence',
+      title: 'Достоверность',
       dataIndex: 'confidence',
       key: 'confidence',
       render: (confidence: number) => `${(confidence * 100).toFixed(1)}%`,
       sorter: (a: Event, b: Event) => a.confidence - b.confidence,
     },
     {
-      title: 'Severity',
+      title: 'Важность',
       dataIndex: 'severity',
       key: 'severity',
       render: (severity: string) => (
@@ -116,30 +116,30 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
       ),
       sorter: (a: Event, b: Event) => a.severity.localeCompare(b.severity),
       filters: [
-        { text: 'Low', value: 'low' },
-        { text: 'Medium', value: 'medium' },
-        { text: 'High', value: 'high' },
-        { text: 'Critical', value: 'critical' },
+        { text: 'Низкая', value: 'low' },
+        { text: 'Средняя', value: 'medium' },
+        { text: 'Высокая', value: 'high' },
+        { text: 'Критическая', value: 'critical' },
       ],
       onFilter: (value: boolean | React.Key, record: Event) => record.severity === value,
     },
     {
-      title: 'Status',
+      title: 'Статус',
       key: 'resolved',
       render: (_: any, record: Event) => (
         <Badge
           status={record.metadata?.resolved ? 'success' : 'error'}
-          text={record.metadata?.resolved ? 'Resolved' : 'Pending'}
+          text={record.metadata?.resolved ? 'Решено' : 'В ожидании'}
         />
       ),
       filters: [
-        { text: 'Resolved', value: true },
-        { text: 'Pending', value: false },
+        { text: 'Решено', value: true },
+        { text: 'В ожидании', value: false },
       ],
       onFilter: (value: boolean | React.Key, record: Event) => record.metadata?.resolved === value,
     },
     {
-      title: 'Actions',
+      title: 'Действия',
       key: 'actions',
       render: (_: any, record: Event) => (
         <Space size="middle">
@@ -148,14 +148,14 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
             icon={<EyeOutlined />}
             onClick={() => setSelectedEvent(record)}
           >
-            View
+            Просмотр
           </Button>
           <Button
             type="link"
             icon={<DownloadOutlined />}
             onClick={() => handleDownloadClip(record)}
           >
-            Clip
+            Клип
           </Button>
         </Space>
       ),
@@ -193,7 +193,7 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <AlertOutlined /> Events
+            <AlertOutlined /> События
           </Title>
         </Col>
         <Col>
@@ -203,7 +203,7 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
               icon={<FilterOutlined />}
               onClick={() => setFilterVisible(!filterVisible)}
             >
-              Filters
+              Фильтры
             </Button>
           </Space>
         </Col>
@@ -215,34 +215,34 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by camera"
+                placeholder="Фильтр по камере"
                 onChange={(value) => handleFilterChange({ cameraId: value })}
                 allowClear
               >
-                <Option value="Entrance Cam 1">Entrance Cam 1</Option>
-                <Option value="Parking Cam 2">Parking Cam 2</Option>
-                <Option value="Gate Cam 3">Gate Cam 3</Option>
-                <Option value="Warehouse Cam 1">Warehouse Cam 1</Option>
-                <Option value="Perimeter Cam 4">Perimeter Cam 4</Option>
+                <Option value="Entrance Cam 1">Камера входа 1</Option>
+                <Option value="Parking Cam 2">Камера парковки 2</Option>
+                <Option value="Gate Cam 3">Камера ворот 3</Option>
+                <Option value="Warehouse Cam 1">Камера склада 1</Option>
+                <Option value="Perimeter Cam 4">Камера периметра 4</Option>
               </Select>
             </Col>
             <Col span={8}>
               <Select
                 style={{ width: '100%' }}
-                placeholder="Filter by object type"
+                placeholder="Фильтр по типу объекта"
                 onChange={(value) => handleFilterChange({ objectType: value })}
                 allowClear
               >
-                <Option value="Person">Person</Option>
-                <Option value="Car">Car</Option>
-                <Option value="Truck">Truck</Option>
-                <Option value="Bag">Bag</Option>
-                <Option value="Bicycle">Bicycle</Option>
+                <Option value="Person">Человек</Option>
+                <Option value="Car">Автомобиль</Option>
+                <Option value="Truck">Грузовик</Option>
+                <Option value="Bag">Сумка</Option>
+                <Option value="Bicycle">Велосипед</Option>
               </Select>
             </Col>
             <Col span={8}>
               <Input
-                placeholder="Search events..."
+                placeholder="Поиск событий..."
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleFilterChange({ search: e.target.value })}
               />
@@ -268,12 +268,12 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
       </Card>
 
       <Modal
-        title="Event Details"
+        title="Детали события"
         open={!!selectedEvent}
         onCancel={() => setSelectedEvent(null)}
         footer={[
           <Button key="close" onClick={() => setSelectedEvent(null)}>
-            Close
+            Закрыть
           </Button>,
         ]}
       >
@@ -281,19 +281,19 @@ const EventsDataFetcher: React.FC<EventsDataFetcherProps> = ({ initialFilters = 
           <div>
             <Typography.Title level={4}>{selectedEvent.cameraName}</Typography.Title>
             <Typography.Paragraph>
-              <strong>Object:</strong> {selectedEvent.objectType}
+              <strong>Объект:</strong> {selectedEvent.objectType}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Timestamp:</strong> {selectedEvent.timestamp}
+              <strong>Время:</strong> {selectedEvent.timestamp}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Confidence:</strong> {(selectedEvent.confidence * 100).toFixed(1)}%
+              <strong>Достоверность:</strong> {(selectedEvent.confidence * 100).toFixed(1)}%
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Severity:</strong> {selectedEvent.severity.toUpperCase()}
+              <strong>Важность:</strong> {selectedEvent.severity.toUpperCase()}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              <strong>Status:</strong> {selectedEvent.metadata?.resolved ? 'Resolved' : 'Pending'}
+              <strong>Статус:</strong> {selectedEvent.metadata?.resolved ? 'Решено' : 'В ожидании'}
             </Typography.Paragraph>
           </div>
         )}

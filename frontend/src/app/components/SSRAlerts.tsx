@@ -54,18 +54,18 @@ const SSRAlerts: React.FC<SSRAlertsProps> = ({ alerts, loading = false }) => {
       sorter: (a: Alert, b: Alert) => a.id - b.id,
     },
     {
-      title: 'Title',
+      title: 'Заголовок',
       dataIndex: 'title',
       key: 'title',
       sorter: (a: Alert, b: Alert) => a.title.localeCompare(b.title),
     },
     {
-      title: 'Message',
+      title: 'Сообщение',
       dataIndex: 'message',
       key: 'message',
     },
     {
-      title: 'Type',
+      title: 'Тип',
       dataIndex: 'type',
       key: 'type',
       render: (type: string) => (
@@ -75,36 +75,36 @@ const SSRAlerts: React.FC<SSRAlertsProps> = ({ alerts, loading = false }) => {
       ),
       sorter: (a: Alert, b: Alert) => a.type.localeCompare(b.type),
       filters: [
-        { text: 'Info', value: 'info' },
-        { text: 'Warning', value: 'warning' },
-        { text: 'Error', value: 'error' },
-        { text: 'Success', value: 'success' },
+        { text: 'Информация', value: 'info' },
+        { text: 'Предупреждение', value: 'warning' },
+        { text: 'Ошибка', value: 'error' },
+        { text: 'Успех', value: 'success' },
       ],
       onFilter: (value: boolean | React.Key, record: Alert) => record.type === value,
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
       sorter: (a: Alert, b: Alert) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
     },
     {
-      title: 'Status',
+      title: 'Статус',
       key: 'read',
       render: (_: any, record: Alert) => (
         <Badge
           status={record.read ? 'success' : 'error'}
-          text={record.read ? 'Read' : 'Unread'}
+          text={record.read ? 'Прочитано' : 'Непрочитано'}
         />
       ),
       filters: [
-        { text: 'Read', value: true },
-        { text: 'Unread', value: false },
+        { text: 'Прочитано', value: true },
+        { text: 'Непрочитано', value: false },
       ],
       onFilter: (value: boolean | React.Key, record: Alert) => record.read === value,
     },
     {
-      title: 'Actions',
+      title: 'Действия',
       key: 'actions',
       render: (_: any, record: Alert) => (
         <Space size="middle">
@@ -113,14 +113,14 @@ const SSRAlerts: React.FC<SSRAlertsProps> = ({ alerts, loading = false }) => {
             icon={<EyeOutlined />}
             onClick={() => console.log('View alert:', record)}
           >
-            View
+            Просмотр
           </Button>
           <Button
             type="link"
             icon={<DownloadOutlined />}
             onClick={() => console.log('Download alert:', record)}
           >
-            Export
+            Экспорт
           </Button>
         </Space>
       ),
@@ -132,7 +132,7 @@ const SSRAlerts: React.FC<SSRAlertsProps> = ({ alerts, loading = false }) => {
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <AlertOutlined /> Alerts
+            <AlertOutlined /> Оповещения
           </Title>
         </Col>
         <Col>
@@ -141,13 +141,13 @@ const SSRAlerts: React.FC<SSRAlertsProps> = ({ alerts, loading = false }) => {
               type="primary"
               onClick={() => console.log('Mark all as read')}
             >
-              Mark All Read
+              Отметить все прочитанными
             </Button>
             <Button
               danger
               onClick={() => console.log('Clear all alerts')}
             >
-              Clear All
+              Очистить все
             </Button>
           </Space>
         </Col>
@@ -165,7 +165,7 @@ const SSRAlerts: React.FC<SSRAlertsProps> = ({ alerts, loading = false }) => {
       </Card>
 
       <Modal
-        title="Alert Details"
+        title="Детали оповещения"
         open={false}
         onCancel={() => {}}
         footer={null}

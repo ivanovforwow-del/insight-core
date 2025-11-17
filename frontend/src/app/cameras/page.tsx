@@ -3,9 +3,9 @@ import { Metadata } from 'next';
 import SSRCameras from '../components/SSRCameras';
 import { Camera } from '@/types';
 
-// Mock data fetching function for SSR
+// Функция получения тестовых данных для SSR
 async function fetchCameras(): Promise<Camera[]> {
-  // Simulate API call delay
+  // Имитация задержки вызова API
   await new Promise(resolve => setTimeout(resolve, 100));
   
   return [
@@ -77,8 +77,8 @@ async function fetchCameras(): Promise<Camera[]> {
 }
 
 export const metadata: Metadata = {
-  title: 'Cameras | InsightCore',
-  description: 'Manage and monitor security cameras',
+  title: 'Камеры | InsightCore',
+  description: 'Управление и мониторинг камер безопасности',
 };
 
 const CamerasPage = async () => {

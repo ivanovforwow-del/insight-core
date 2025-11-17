@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { QueryClient } from '@tanstack/react-query';
 
-// Create axios instance with base configuration
+// Создание экземпляра axios с базовой конфигурацией
 const apiClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL || '/api',
   timeout: 30000,
@@ -10,7 +10,7 @@ const apiClient = axios.create({
   },
 });
 
-// Request interceptor to add auth token
+// Перехватчик запросов для добавления токена аутентификации
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('access_token');
@@ -24,12 +24,12 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle errors
+// Перехватчик ответов для обработки ошибок
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized access
+      // Обработка несанкционированного доступа
       localStorage.removeItem('access_token');
       window.location.href = '/login';
     }
@@ -37,7 +37,7 @@ apiClient.interceptors.response.use(
   }
 );
 
-// Create query client with default options
+// Создание клиента запросов с параметрами по умолчанию
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

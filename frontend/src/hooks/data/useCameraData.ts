@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { cameraService } from '../../services/cameraService';
 import { Camera } from '../../types';
 
-// Query keys for camera data
+// Ключи запросов для данных камер
 const CAMERA_QUERY_KEYS = {
   all: ['cameras'] as const,
   lists: () => [...CAMERA_QUERY_KEYS.all, 'list'] as const,

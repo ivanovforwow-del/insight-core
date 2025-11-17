@@ -22,7 +22,7 @@ import { useAlerts } from '@/hooks/data/useAlertData';
 
 const { Title, Text } = Typography;
 
-// Mock data for charts - in real app these would come from hooks
+// Данные для графиков для тестирования - в реальном приложении они будут из хуков
 const eventsByType: EventByType[] = [
   { name: 'Person', value: 56 },
   { name: 'Vehicle', value: 32 },
@@ -68,12 +68,12 @@ const severityColors: Record<string, string> = {
 };
 
 const DashboardPage = () => {
-  // Using the new hooks instead of mock data
+  // Использование новых хуков вместо тестовых данных
   const { data: cameras, isLoading: camerasLoading } = useCameras();
   const { data: events, isLoading: eventsLoading } = useEvents({ limit: 5 });
   const { data: alerts, isLoading: alertsLoading } = useAlerts({ limit: 5 });
 
-  // Mock dashboard statistics - in real app this would come from an API
+  // Статистика панели управления для тестирования - в реальном приложении будет из API
   const { data: stats } = useQuery<AnalyticsData>({
     queryKey: ['dashboard-stats'],
     queryFn: async () => ({
@@ -95,12 +95,12 @@ const DashboardPage = () => {
       key: 'id',
     },
     {
-      title: 'Camera',
+      title: 'Камера',
       dataIndex: 'cameraName',
       key: 'cameraName',
     },
     {
-      title: 'Object',
+      title: 'Объект',
       dataIndex: 'objectType',
       key: 'objectType',
       render: (text: string) => (
@@ -114,12 +114,12 @@ const DashboardPage = () => {
       ),
     },
     {
-      title: 'Timestamp',
+      title: 'Время',
       dataIndex: 'timestamp',
       key: 'timestamp',
     },
     {
-      title: 'Severity',
+      title: 'Важность',
       dataIndex: 'severity',
       key: 'severity',
       render: (severity: string) => (
@@ -131,7 +131,7 @@ const DashboardPage = () => {
   return (
     <div style={{ padding: '24px' }}>
       <Title level={2}>
-        <DashboardOutlined /> Dashboard
+        <DashboardOutlined /> Панель управления
       </Title>
       
       {/* Statistics Cards */}
@@ -139,7 +139,7 @@ const DashboardPage = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Total Cameras"
+              title="Всего камер"
               value={stats?.totalCameras || 0}
               prefix={<VideoCameraOutlined />}
               suffix={`/ ${stats?.activeCameras || 0} active`}
@@ -149,7 +149,7 @@ const DashboardPage = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Total Events"
+              title="Всего событий"
               value={stats?.totalEvents || 0}
               prefix={<AlertOutlined />}
             />
@@ -158,7 +158,7 @@ const DashboardPage = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Events Today"
+              title="Событий сегодня"
               value={stats?.eventsToday || 0}
               prefix={<ClockCircleOutlined />}
             />
@@ -167,7 +167,7 @@ const DashboardPage = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Alerts Today"
+              title="Оповещений сегодня"
               value={stats?.alertsToday || 0}
               prefix={<CheckCircleOutlined />}
             />
@@ -177,7 +177,7 @@ const DashboardPage = () => {
 
       <Row gutter={16} style={{ marginBottom: 24 }}>
         <Col span={16}>
-          <Card title="Events by Hour" style={{ height: 300 }}>
+          <Card title="События по часам" style={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={eventsByHour}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -191,7 +191,7 @@ const DashboardPage = () => {
           </Card>
         </Col>
         <Col span={8}>
-          <Card title="Events by Type" style={{ height: 300 }}>
+          <Card title="События по типам" style={{ height: 300 }}>
             <ResponsiveContainer width="10%" height="100%">
               <PieChart>
                 <Pie
@@ -217,7 +217,7 @@ const DashboardPage = () => {
 
       <Row gutter={16}>
         <Col span={24}>
-          <Card title="Recent Events">
+          <Card title="Последние события">
             <div>
               {events?.data && events.data.length > 0 ? (
                 <div>
@@ -232,7 +232,7 @@ const DashboardPage = () => {
                   ))}
                 </div>
               ) : (
-                <Text>No recent events</Text>
+                <Text>Нет последних событий</Text>
               )}
             </div>
           </Card>
