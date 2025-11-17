@@ -24,7 +24,7 @@ const LoginPage = () => {
 
       message.success('Вход выполнен успешно!');
       // Перенаправление на панель управления или предыдущую страницу
-      router.push('/cameras');
+      router.push('/');
       router.refresh();
     } catch (error: any) {
       console.error('Ошибка входа:', error);
@@ -97,7 +97,7 @@ const LoginPage = () => {
           
           <div style={{ textAlign: 'center' }}>
             <Text type="secondary">
-              Демонстрационные учетные данные: admin / admin12345
+              Демонстрационные учетные данные: admin / admin123
             </Text>
           </div>
         </Form>
