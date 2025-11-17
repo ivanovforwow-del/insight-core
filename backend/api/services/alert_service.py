@@ -7,11 +7,11 @@ from events.models import Event
 
 
 class AlertService:
-    """Service class for handling alert-related business logic"""
+    """Класс сервиса для обработки бизнес-логики, связанной с оповещениями"""
     
     @staticmethod
     def send_alert_to_channels(event_id: int, channel_ids: List[int]) -> List[Dict[str, Any]]:
-        """Send alert for event to specified channels"""
+        """Отправить оповещение о событии в указанные каналы"""
         try:
             event = Event.objects.get(id=event_id)
             channels = AlertChannel.objects.filter(id__in=channel_ids)
@@ -35,7 +35,7 @@ class AlertService:
     
     @staticmethod
     def send_batch_alerts(event_ids: List[int], channel_ids: List[int]) -> List[Dict[str, Any]]:
-        """Send alerts for multiple events to multiple channels"""
+        """Отправить оповещения о нескольких событиях в несколько каналов"""
         sent_alerts = []
         
         for event_id in event_ids:
@@ -64,23 +64,23 @@ class AlertService:
     
     @staticmethod
     def get_alerts_by_event(event_id: int) -> QuerySet[Alert]:
-        """Get all alerts for specific event"""
+        """Получить все оповещения для определенного события"""
         return Alert.objects.filter(event_id=event_id)
     
     @staticmethod
     def get_alerts_by_channel(channel_id: int) -> QuerySet[Alert]:
-        """Get all alerts sent to specific channel"""
+        """Получить все оповещения, отправленные в определенный канал"""
         return Alert.objects.filter(channel_id=channel_id)
     
     @staticmethod
     def get_recent_alerts(hours: int = 24) -> QuerySet[Alert]:
-        """Get alerts from the last N hours"""
+        """Получить оповещения за последние N часов"""
         time_threshold = timezone.now() - timezone.timedelta(hours=hours)
         return Alert.objects.filter(created_at__gte=time_threshold).order_by('-created_at')
     
     @staticmethod
     def get_alert_statistics(start_date: Any = None, end_date: Any = None) -> Dict[str, Any]:
-        """Get alert statistics for dashboard"""
+        """Получить статистику оповещений для дашборда"""
         queryset = Alert.objects.all()
         if start_date:
             queryset = queryset.filter(created_at__gte=start_date)

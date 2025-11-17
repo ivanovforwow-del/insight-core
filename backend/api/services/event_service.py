@@ -9,12 +9,12 @@ from alerts.models import Alert
 
 
 class EventService:
-    """Service class for handling event-related business logic"""
+    """Класс сервиса для обработки бизнес-логики, связанной с событиями"""
     
     @staticmethod
     def get_events_for_time_range(start_date: Optional[datetime] = None, 
                                 end_date: Optional[datetime] = None) -> QuerySet[Event]:
-        """Get events filtered by time range"""
+        """Получить события, отфильтрованные по временному диапазону"""
         queryset = Event.objects.all()
         if start_date:
             queryset = queryset.filter(timestamp__gte=start_date)
@@ -24,28 +24,28 @@ class EventService:
     
     @staticmethod
     def get_events_by_camera(camera_id: int) -> QuerySet[Event]:
-        """Get events for specific camera"""
+        """Получить события для определенной камеры"""
         return Event.objects.filter(camera_id=camera_id).order_by('-timestamp')
     
     @staticmethod
     def get_events_by_rule(rule_id: int) -> QuerySet[Event]:
-        """Get events for specific rule"""
+        """Получить события для определенного правила"""
         return Event.objects.filter(rule_id=rule_id).order_by('-timestamp')
     
     @staticmethod
     def get_recent_events(hours: int = 24) -> QuerySet[Event]:
-        """Get events from the last N hours"""
+        """Получить события за последние N часов"""
         time_threshold = timezone.now() - timedelta(hours=hours)
         return Event.objects.filter(timestamp__gte=time_threshold).order_by('-timestamp')
     
     @staticmethod
     def get_events_by_type(object_class: str) -> QuerySet[Event]:
-        """Get events filtered by object class"""
+        """Получить события, отфильтрованные по классу объекта"""
         return Event.objects.filter(object_class=object_class).order_by('-timestamp')
     
     @staticmethod
     def resolve_event(event_id: int, resolver_user: Any) -> Event:
-        """Mark event as resolved"""
+        """Отметить событие как решенное"""
         event = Event.objects.get(id=event_id)
         event.resolved = True
         event.resolved_at = timezone.now()
@@ -55,7 +55,7 @@ class EventService:
     
     @staticmethod
     def create_alerts_for_event(event: Event, channel_ids: List[int]) -> List[Alert]:
-        """Create alerts for an event"""
+        """Создать оповещения для события"""
         from alerts.models import AlertChannel
         channels = AlertChannel.objects.filter(id__in=channel_ids)
         
@@ -73,7 +73,7 @@ class EventService:
     @staticmethod
     def get_event_statistics(start_date: Optional[datetime] = None, 
                            end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Get event statistics for dashboard"""
+        """Получить статистику событий для дашборда"""
         events = EventService.get_events_for_time_range(start_date, end_date)
         
         stats = {

@@ -42,8 +42,8 @@ const Events = () => {
       {
         id: 1,
         cameraId: 1,
-        cameraName: 'Entrance Cam 1',
-        objectType: 'Person',
+        cameraName: 'Камера 1 (вход)',
+        objectType: 'Человек',
         timestamp: '2023-12-01 10:30:15',
         confidence: 0.95,
         severity: 'high',
@@ -58,8 +58,8 @@ const Events = () => {
       {
         id: 2,
         cameraId: 2,
-        cameraName: 'Parking Cam 2',
-        objectType: 'Car',
+        cameraName: 'Камера 2 (парковка)',
+        objectType: 'Автомобиль',
         timestamp: '2023-12-01 10:28:42',
         confidence: 0.87,
         severity: 'medium',
@@ -74,8 +74,8 @@ const Events = () => {
       {
         id: 3,
         cameraId: 3,
-        cameraName: 'Gate Cam 3',
-        objectType: 'Bag',
+        cameraName: 'Камера 3 (ворота)',
+        objectType: 'Сумка',
         timestamp: '2023-12-01 10:25:33',
         confidence: 0.92,
         severity: 'high',
@@ -90,8 +90,8 @@ const Events = () => {
       {
         id: 4,
         cameraId: 4,
-        cameraName: 'Warehouse Cam 1',
-        objectType: 'Person',
+        cameraName: 'Камера 1 (склад)',
+        objectType: 'Человек',
         timestamp: '2023-12-01 10:22:18',
         confidence: 0.89,
         severity: 'medium',
@@ -106,8 +106,8 @@ const Events = () => {
       {
         id: 5,
         cameraId: 5,
-        cameraName: 'Perimeter Cam 4',
-        objectType: 'Person',
+        cameraName: 'Камера 4 (периметр)',
+        objectType: 'Человек',
         timestamp: '2023-12-01 10:20:05',
         confidence: 0.78,
         severity: 'low',
@@ -130,11 +130,11 @@ const Events = () => {
   };
 
   const objectColors: Record<string, string> = {
-    Person: '#1890ff',
-    Car: '#52c41a',
-    Truck: '#faad14',
+    Человек: '#1890ff',
+    Автомобиль: '#52c41a',
+    Грузовик: '#faad14',
     Bag: '#f5222d',
-    Bicycle: '#722ed1',
+    Велосипед: '#722ed1',
   };
 
   const columns = [
@@ -204,7 +204,7 @@ const Events = () => {
       render: (_: any, record: Event) => (
         <Badge
           status={record.metadata?.resolved ? 'success' : 'error'}
-          text={record.metadata?.resolved ? 'Resolved' : 'Pending'}
+          text={record.metadata?.resolved ? 'Решено' : 'В ожидании'}
         />
       ),
       filters: [
@@ -294,11 +294,11 @@ const Events = () => {
                 onChange={(value) => handleFilterChange({ camera: value })}
                 allowClear
               >
-                <Option value="Entrance Cam 1">Entrance Cam 1</Option>
-                <Option value="Parking Cam 2">Parking Cam 2</Option>
-                <Option value="Gate Cam 3">Gate Cam 3</Option>
-                <Option value="Warehouse Cam 1">Warehouse Cam 1</Option>
-                <Option value="Perimeter Cam 4">Perimeter Cam 4</Option>
+                <Option value="Камера 1 (вход)">Камера 1 (вход)</Option>
+                <Option value="Камера 2 (парковка)">Камера 2 (парковка)</Option>
+                <Option value="Камера 3 (ворота)">Камера 3 (ворота)</Option>
+                <Option value="Камера 1 (склад)">Камера 1 (склад)</Option>
+                <Option value="Камера 4 (периметр)">Камера 4 (периметр)</Option>
               </Select>
             </Col>
             <Col span={8}>
@@ -308,11 +308,11 @@ const Events = () => {
                 onChange={(value) => handleFilterChange({ objectClass: value })}
                 allowClear
               >
-                <Option value="Person">Person</Option>
-                <Option value="Car">Car</Option>
-                <Option value="Truck">Truck</Option>
-                <Option value="Bag">Bag</Option>
-                <Option value="Bicycle">Bicycle</Option>
+                <Option value="Человек">Человек</Option>
+                <Option value="Автомобиль">Автомобиль</Option>
+                <Option value="Грузовик">Грузовик</Option>
+                <Option value="Сумка">Сумка</Option>
+                <Option value="Велосипед">Велосипед</Option>
               </Select>
             </Col>
             <Col span={8}>

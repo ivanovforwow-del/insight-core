@@ -146,7 +146,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
     id: 1,
     name: 'Test Video',
     cameraId: 1,
-    cameraName: 'Entrance Cam 1',
+    cameraName: 'Камера 1 (вход)',
     startTime: '2023-12-01 10:00:00',
     endTime: '2023-12-01 11:00:00',
     duration: 3600,
@@ -217,13 +217,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
                       icon={<StepBackwardOutlined />}
                       onClick={() => handleTimeChange(currentTime - 10)}
                     >
-                      -10s
+                      -10с
                     </Button>
                     <Button
                       icon={<StepForwardOutlined />}
                       onClick={() => handleTimeChange(currentTime + 10)}
                     >
-                      +10s
+                      +10с
                     </Button>
                   </Space>
                 </Col>
@@ -336,7 +336,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
         onCancel={() => setShowSettings(false)}
         footer={[
           <Button key="close" onClick={() => setShowSettings(false)}>
-            Close
+            Закрыть
           </Button>,
         ]}
       >

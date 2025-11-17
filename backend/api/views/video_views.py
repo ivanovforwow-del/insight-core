@@ -45,7 +45,7 @@ class VideoAnnotationViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
 
-# Video Processing Views
+# Представления обработки видео
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def VideoAnalysisView(request):
@@ -97,7 +97,7 @@ def VideoUploadView(request):
         return Response({'error': str(e)}, status=404)
 
 
-# Live Stream Views
+# Представления потокового видео
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def LiveStreamView(request, camera_id):
@@ -120,7 +120,7 @@ def SnapshotView(request, camera_id):
         return Response({'error': str(e)}, status=404)
 
 
-# Video file-specific Views
+# Представления, специфичные для видео файлов
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def VideoFileClipsView(request, pk):
@@ -145,7 +145,7 @@ def VideoFileDownloadView(request, pk):
         return Response({'error': str(e)}, status=404)
 
 
-# Clip-specific Views
+# Представления, специфичные для клипов
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def ClipAnnotationsView(request, pk):

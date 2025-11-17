@@ -5,7 +5,7 @@ from .models import Camera, Zone, Line
 
 
 class PrettyJSONWidget(widgets.Textarea):
-    """Custom widget for better JSON visualization in admin"""
+    """Пользовательский виджет для лучшей визуализации JSON в админке"""
     def __init__(self, attrs=None):
         default_attrs = {'cols': '80', 'rows': '20'}
         if attrs:
@@ -29,21 +29,23 @@ class PrettyJSONWidget(widgets.Textarea):
 @admin.register(Camera)
 class CameraAdmin(admin.ModelAdmin):
     list_display = ['name', 'status', 'vendor', 'created_at']
+    list_display_links = ['name']
+    list_display_links = ['name']
     list_filter = ['status', 'vendor', 'created_at']
     search_fields = ['name', 'location', 'vendor']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Basic Information', {
+        ('Основная информация', {
             'fields': ('name', 'location', 'vendor', 'status')
         }),
-        ('Connection', {
+        ('Подключение', {
             'fields': ('rtsp_url',)
         }),
-        ('Settings', {
+        ('Настройки', {
             'fields': ('stream_settings', 'snapshot'),
             'classes': ('collapse',)
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
@@ -56,21 +58,23 @@ class CameraAdmin(admin.ModelAdmin):
 @admin.register(Line)
 class LineAdmin(admin.ModelAdmin):
     list_display = ['name', 'camera', 'direction', 'is_active']
+    list_display_links = ['name']
+    list_display_links = ['name']
     list_filter = ['direction', 'is_active', 'camera']
     search_fields = ['name', 'camera__name']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Basic Information', {
+        ('Основная информация', {
             'fields': ('name', 'camera', 'direction', 'is_active')
         }),
-        ('Geometry', {
+        ('Геометрия', {
             'fields': ('points',)
         }),
-        ('Objects', {
+        ('Объекты', {
             'fields': ('allowed_objects', 'forbidden_objects'),
             'classes': ('collapse',)
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
@@ -83,20 +87,22 @@ class LineAdmin(admin.ModelAdmin):
 @admin.register(Zone)
 class ZoneAdmin(admin.ModelAdmin):
     list_display = ['name', 'camera', 'zone_type', 'is_active']
+    list_display_links = ['name']
+    list_display_links = ['name']
     list_filter = ['zone_type', 'is_active', 'camera']
     search_fields = ['name', 'camera__name', 'zone_type']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Basic Information', {
+        ('Основная информация', {
             'fields': ('name', 'camera', 'zone_type', 'is_active')
         }),
-        ('Geometry', {
+        ('Геометрия', {
             'fields': ('polygon',)
         }),
-        ('Objects', {
+        ('Объекты', {
             'fields': ('allowed_objects', 'forbidden_objects', 'max_objects', 'min_duration'),
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),

@@ -46,11 +46,11 @@ const AnalyticsPage = () => {
 
   // Тестовые данные для графиков - в реальном приложении они будут из хуков
   const eventsByType: EventByType[] = [
-    { name: 'Person', value: 56 },
-    { name: 'Vehicle', value: 32 },
-    { name: 'Car', value: 28 },
-    { name: 'Truck', value: 12 },
-    { name: 'Bicycle', value: 8 },
+    { name: 'Человек', value: 56 },
+    { name: 'Транспорт', value: 32 },
+    { name: 'Автомобиль', value: 28 },
+    { name: 'Грузовик', value: 12 },
+    { name: 'Велосипед', value: 8 },
   ];
 
   const eventsByHour: EventByHour[] = [
@@ -157,7 +157,7 @@ const AnalyticsPage = () => {
     },
     {
       key: 5,
-      metric: 'Оповещений сегодня',
+      metric: 'Уведомлений сегодня',
       value: 8,
       change: 8,
     },
@@ -268,7 +268,7 @@ const AnalyticsPage = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Events Today"
+              title="Событий сегодня"
               value={24}
               prefix={<ClockCircleOutlined />}
             />
@@ -277,7 +277,7 @@ const AnalyticsPage = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Оповещений сегодня"
+              title="Уведомлений сегодня"
               value={8}
               prefix={<CheckCircleOutlined />}
             />

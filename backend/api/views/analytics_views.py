@@ -22,7 +22,7 @@ class MLModelViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
 
-# Analytics Views
+# Представления аналитики
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def HeatmapView(request):

@@ -50,7 +50,7 @@ class LineViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
 
-# Camera-specific Views
+# Представления, специфичные для камеры
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def CameraZonesView(request, pk):

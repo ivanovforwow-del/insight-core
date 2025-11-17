@@ -67,11 +67,11 @@ const Analytics = () => {
 
   // Mock events by type
   const eventsByType: EventByType[] = [
-    { name: 'Person', value: 56 },
-    { name: 'Vehicle', value: 32 },
-    { name: 'Car', value: 28 },
-    { name: 'Truck', value: 12 },
-    { name: 'Bicycle', value: 8 },
+    { name: 'Человек', value: 56 },
+    { name: 'Транспорт', value: 32 },
+    { name: 'Автомобиль', value: 28 },
+    { name: 'Грузовик', value: 12 },
+    { name: 'Велосипед', value: 8 },
   ];
 
   // Mock events by hour
@@ -120,8 +120,8 @@ const Analytics = () => {
       {
         id: 1,
         cameraId: 1,
-        cameraName: 'Entrance Cam 1',
-        objectType: 'Person',
+        cameraName: 'Камера 1 (вход)',
+        objectType: 'Человек',
         timestamp: '2023-12-01 10:30:15',
         confidence: 0.95,
         severity: 'high',
@@ -129,8 +129,8 @@ const Analytics = () => {
       {
         id: 2,
         cameraId: 2,
-        cameraName: 'Parking Cam 2',
-        objectType: 'Car',
+        cameraName: 'Камера 2 (парковка)',
+        objectType: 'Автомобиль',
         timestamp: '2023-12-01 10:28:42',
         confidence: 0.87,
         severity: 'medium',
@@ -138,8 +138,8 @@ const Analytics = () => {
       {
         id: 3,
         cameraId: 3,
-        cameraName: 'Gate Cam 3',
-        objectType: 'Truck',
+        cameraName: 'Камера 3 (ворота)',
+        objectType: 'Грузовик',
         timestamp: '2023-12-01 10:25:33',
         confidence: 0.92,
         severity: 'low',
@@ -147,8 +147,8 @@ const Analytics = () => {
       {
         id: 4,
         cameraId: 4,
-        cameraName: 'Warehouse Cam 1',
-        objectType: 'Person',
+        cameraName: 'Камера 1 (склад)',
+        objectType: 'Человек',
         timestamp: '2023-12-01 10:22:18',
         confidence: 0.89,
         severity: 'high',
@@ -156,8 +156,8 @@ const Analytics = () => {
       {
         id: 5,
         cameraId: 5,
-        cameraName: 'Perimeter Cam 4',
-        objectType: 'Vehicle',
+        cameraName: 'Камера 4 (периметр)',
+        objectType: 'Транспорт',
         timestamp: '2023-12-01 10:20:05',
         confidence: 0.78,
         severity: 'medium',
@@ -231,7 +231,7 @@ const Analytics = () => {
     },
     {
       key: 5,
-      metric: 'Оповещений сегодня',
+      metric: 'Уведомлений сегодня',
       value: analyticsData?.alertsToday || 0,
       change: 8,
     },
@@ -326,7 +326,7 @@ const Analytics = () => {
               title="Всего камер"
               value={analyticsData?.totalCameras || 0}
               prefix={<VideoCameraOutlined />}
-              suffix={`/ ${analyticsData?.activeCameras || 0} active`}
+              suffix={`/ ${analyticsData?.activeCameras || 0} активных`}
             />
           </Card>
         </Col>
@@ -351,7 +351,7 @@ const Analytics = () => {
         <Col span={4}>
           <Card>
             <Statistic
-              title="Оповещений сегодня"
+              title="Уведомлений сегодня"
               value={analyticsData?.alertsToday || 0}
               prefix={<CheckCircleOutlined />}
             />

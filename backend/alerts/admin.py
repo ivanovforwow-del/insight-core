@@ -5,7 +5,7 @@ from .models import AlertChannel, Alert
 
 
 class PrettyJSONWidget(widgets.Textarea):
-    """Custom widget for better JSON visualization in admin"""
+    """Пользовательский виджет для лучшей визуализации JSON в админке"""
     def __init__(self, attrs=None):
         default_attrs = {'cols': '80', 'rows': '20'}
         if attrs:
@@ -29,17 +29,19 @@ class PrettyJSONWidget(widgets.Textarea):
 @admin.register(AlertChannel)
 class AlertChannelAdmin(admin.ModelAdmin):
     list_display = ['name', 'channel_type', 'created_at']
+    list_display_links = ['name']
+    list_display_links = ['name']
     list_filter = ['channel_type', 'created_at']
     search_fields = ['name', 'channel_type']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Basic Information', {
+        ('Основная информация', {
             'fields': ('name', 'channel_type')
         }),
-        ('Configuration', {
+        ('Конфигурация', {
             'fields': ('config',)
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
@@ -52,17 +54,19 @@ class AlertChannelAdmin(admin.ModelAdmin):
 @admin.register(Alert)
 class AlertAdmin(admin.ModelAdmin):
     list_display = ['event', 'channel', 'status', 'created_at']
+    list_display_links = ['event']
+    list_display_links = ['event']
     list_filter = ['status', 'channel', 'created_at']
     search_fields = ['event__id', 'channel__name', 'message']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Basic Information', {
+        ('Основная информация', {
             'fields': ('event', 'channel', 'status')
         }),
-        ('Details', {
+        ('Детали', {
             'fields': ('message', 'delivery_attempts', 'last_delivery_attempt', 'delivery_response')
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),

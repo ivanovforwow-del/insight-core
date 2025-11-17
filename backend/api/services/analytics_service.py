@@ -9,13 +9,13 @@ from cameras.models import Camera
 
 
 class AnalyticsService:
-    """Service class for handling analytics and reporting business logic"""
+    """Класс сервиса для обработки аналитики и бизнес-логики отчетов"""
     
     @staticmethod
     def get_heatmap_data(camera_id: Optional[int] = None, 
                         start_date: Optional[datetime] = None, 
                         end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate heatmap data for events"""
+        """Генерировать данные тепловой карты для событий"""
         queryset = Event.objects.all()
         if camera_id:
             queryset = queryset.filter(camera_id=camera_id)
@@ -37,7 +37,7 @@ class AnalyticsService:
     def get_timeline_data(camera_id: Optional[int] = None,
                          start_date: Optional[datetime] = None,
                          end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate timeline data for events"""
+        """Генерировать данные временной шкалы для событий"""
         queryset = Event.objects.all()
         if camera_id:
             queryset = queryset.filter(camera_id=camera_id)
@@ -56,7 +56,7 @@ class AnalyticsService:
     @staticmethod
     def get_analytics_report(start_date: Optional[datetime] = None,
                            end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate comprehensive analytics report"""
+        """Генерировать комплексный аналитический отчет"""
         events_queryset = Event.objects.all()
         alerts_queryset = Alert.objects.all()
         
@@ -92,7 +92,7 @@ class AnalyticsService:
     
     @staticmethod
     def _get_events_by_severity(queryset: QuerySet[Event]) -> Dict[str, int]:
-        """Helper method to count events by severity"""
+        """Вспомогательный метод для подсчета событий по уровню серьезности"""
         severity_counts = {}
         for event in queryset:
             severity = event.severity
@@ -101,7 +101,7 @@ class AnalyticsService:
     
     @staticmethod
     def get_dashboard_stats() -> Dict[str, Any]:
-        """Get dashboard statistics"""
+        """Получить статистику дашборда"""
         from django.db.models import Count, Avg
         
         today = timezone.now().date()

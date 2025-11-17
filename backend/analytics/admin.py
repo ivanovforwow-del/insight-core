@@ -9,7 +9,7 @@ from alerts.models import AlertChannel, Alert
 
 
 class PrettyJSONWidget(widgets.Textarea):
-    """Custom widget for better JSON visualization in admin"""
+    """Пользовательский виджет для лучшей визуализации JSON в админке"""
     def __init__(self, attrs=None):
         default_attrs = {'cols': '80', 'rows': '20'}
         if attrs:
@@ -33,17 +33,19 @@ class PrettyJSONWidget(widgets.Textarea):
 @admin.register(MLModel)
 class MLModelAdmin(admin.ModelAdmin):
     list_display = ['name', 'version', 'accuracy', 'is_active', 'created_at']
+    list_display_links = ['name']
+    list_display_links = ['name']
     list_filter = ['is_active', 'created_at']
     search_fields = ['name', 'description']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Basic Information', {
+        ('Основная информация', {
             'fields': ('name', 'description', 'version', 'is_active')
         }),
-        ('Model Details', {
+        ('Детали модели', {
             'fields': ('model_file', 'training_dataset_size', 'accuracy')
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),

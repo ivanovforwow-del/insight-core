@@ -5,7 +5,7 @@ from .models import VideoFile, Clip, VideoAnnotation
 
 
 class PrettyJSONWidget(widgets.Textarea):
-    """Custom widget for better JSON visualization in admin"""
+    """Пользовательский виджет для лучшей визуализации JSON в админке"""
     def __init__(self, attrs=None):
         default_attrs = {'cols': '80', 'rows': '20'}
         if attrs:
@@ -29,20 +29,22 @@ class PrettyJSONWidget(widgets.Textarea):
 @admin.register(VideoFile)
 class VideoFileAdmin(admin.ModelAdmin):
     list_display = ['id', 'camera', 'start_time', 'end_time', 'duration', 'file_size']
+    list_display_links = ['id']
+    list_display_links = ['id']
     list_filter = ['start_time', 'end_time', 'camera']
     search_fields = ['id', 'camera__name', 'storage_path']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Camera Information', {
+        ('Информация о камере', {
             'fields': ('camera',)
         }),
-        ('Time Information', {
+        ('Временная информация', {
             'fields': ('start_time', 'end_time', 'duration')
         }),
-        ('File Information', {
+        ('Информация о файле', {
             'fields': ('storage_path', 'file_size', 'fps', 'resolution')
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
@@ -52,20 +54,22 @@ class VideoFileAdmin(admin.ModelAdmin):
 @admin.register(Clip)
 class ClipAdmin(admin.ModelAdmin):
     list_display = ['id', 'video_file', 'start_offset', 'end_offset', 'label', 'is_annotated']
+    list_display_links = ['id']
+    list_display_links = ['id']
     list_filter = ['is_annotated', 'label', 'video_file__start_time']
     search_fields = ['id', 'video_file__id', 'label']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Video File', {
+        ('Видео файл', {
             'fields': ('video_file',)
         }),
-        ('Time Information', {
+        ('Временная информация', {
             'fields': ('start_offset', 'end_offset')
         }),
-        ('Details', {
+        ('Детали', {
             'fields': ('label', 'is_annotated')
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
@@ -75,20 +79,22 @@ class ClipAdmin(admin.ModelAdmin):
 @admin.register(VideoAnnotation)
 class VideoAnnotationAdmin(admin.ModelAdmin):
     list_display = ['clip', 'label', 'start_time', 'confidence', 'created_by']
+    list_display_links = ['clip']
+    list_display_links = ['clip']
     list_filter = ['label', 'confidence', 'created_by']
     search_fields = ['clip__id', 'label', 'created_by__username']
     readonly_fields = ['created_at', 'updated_at']
     fieldsets = (
-        ('Clip Information', {
+        ('Информация о клипе', {
             'fields': ('clip', 'created_by')
         }),
-        ('Time Information', {
+        ('Временная информация', {
             'fields': ('start_time', 'end_time')
         }),
-        ('Object Information', {
+        ('Информация объекте', {
             'fields': ('label', 'bbox', 'confidence')
         }),
-        ('Timestamps', {
+        ('Временные метки', {
             'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),

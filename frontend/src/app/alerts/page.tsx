@@ -70,7 +70,7 @@ const AlertsPage = () => {
       sorter: (a: Alert, b: Alert) => a.id - b.id,
     },
     {
-      title: 'Заголовок',
+      title: 'Название',
       dataIndex: 'title',
       key: 'title',
       sorter: (a: Alert, b: Alert) => a.title.localeCompare(b.title),
@@ -138,7 +138,7 @@ const AlertsPage = () => {
               onClick={() => markAsReadMutation.mutate(record.id)}
               loading={markAsReadMutation.isPending && markAsReadMutation.variables === record.id}
             >
-              Отметить прочитанным
+              Отметить как прочитанное
             </Button>
           )}
           <Button
@@ -173,8 +173,8 @@ const AlertsPage = () => {
 
   const handleClearAll = () => {
     Modal.confirm({
-      title: 'Очистить все оповещения',
-      content: 'Вы уверены, что хотите очистить все оповещения?',
+      title: 'Очистить все уведомления',
+      content: 'Вы уверены, что хотите очистить все уведомления?',
       onOk: () => deleteAllAlertsMutation.mutate(),
     });
   };
@@ -236,7 +236,7 @@ const AlertsPage = () => {
             </Col>
             <Col span={8}>
               <Input
-                placeholder="Поиск оповещений..."
+                placeholder="Поиск уведомлений..."
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleFilterChange({ search: e.target.value })}
               />
@@ -262,7 +262,7 @@ const AlertsPage = () => {
       </Card>
 
       <Modal
-        title="Детали оповещения"
+        title="Детали уведомления"
         open={!!selectedAlert}
         onCancel={() => setSelectedAlert(null)}
         footer={[

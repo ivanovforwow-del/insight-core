@@ -47,7 +47,7 @@ class EventViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-# Event-specific Views
+# Представления, специфичные для событий
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def EventResolveView(request, pk):

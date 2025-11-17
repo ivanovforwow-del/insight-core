@@ -205,13 +205,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ video }) => {
                       icon={<StepBackwardOutlined />}
                       onClick={() => handleTimeChange(currentTime - 10)}
                     >
-                      -10s
+                      -10с
                     </Button>
                     <Button
                       icon={<StepForwardOutlined />}
                       onClick={() => handleTimeChange(currentTime + 10)}
                     >
-                      +10s
+                      +10с
                     </Button>
                   </Space>
                 </Col>

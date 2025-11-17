@@ -31,7 +31,7 @@ class AlertViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
 
-# Alert Management Views
+# Представления управления оповещениями
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def SendAlertView(request):

@@ -9,26 +9,26 @@ from events.models import Event
 
 
 class VideoService:
-    """Service class for handling video-related business logic"""
+    """Класс сервиса для обработки бизнес-логики, связанной с видео"""
     
     @staticmethod
     def get_video_files_by_camera(camera_id: int) -> QuerySet[VideoFile]:
-        """Get video files for specific camera"""
+        """Получить видео файлы для определенной камеры"""
         return VideoFile.objects.filter(camera_id=camera_id).order_by('-start_time')
     
     @staticmethod
     def get_video_clips(video_file_id: int) -> QuerySet[Clip]:
-        """Get clips for specific video file"""
+        """Получить клипы для определенного видео файла"""
         return Clip.objects.filter(video_file_id=video_file_id)
     
     @staticmethod
     def get_clip_annotations(clip_id: int) -> QuerySet[VideoAnnotation]:
-        """Get annotations for specific clip"""
+        """Получить аннотации для определенного клипа"""
         return VideoAnnotation.objects.filter(clip_id=clip_id)
     
     @staticmethod
     def create_video_analysis_job(video_id: str) -> Dict[str, Any]:
-        """Create video analysis job (placeholder for actual analysis logic)"""
+        """Создать задание на анализ видео (заглушка для фактической логики анализа)"""
         result = {
             'video_id': video_id,
             'status': 'processing',
@@ -39,7 +39,7 @@ class VideoService:
     
     @staticmethod
     def process_video_file(video_file: VideoFile) -> Dict[str, Any]:
-        """Process uploaded video file (placeholder for actual processing logic)"""
+        """Обработать загруженный видео файл (заглушка для фактической логики обработки)"""
         result = {
             'status': 'processing',
             'file_size': video_file.file_size,
@@ -50,7 +50,7 @@ class VideoService:
     
     @staticmethod
     def upload_video_file(video_file, camera_id: int) -> Dict[str, Any]:
-        """Handle video file upload (placeholder for actual upload logic)"""
+        """Обработать загрузку видео файла (заглушка для фактической логики загрузки)"""
         from cameras.models import Camera
         try:
             camera = Camera.objects.get(id=camera_id)
@@ -66,7 +66,7 @@ class VideoService:
     
     @staticmethod
     def get_live_stream_url(camera_id: int) -> Dict[str, Any]:
-        """Get live stream URL for camera"""
+        """Получить URL потокового видео для камеры"""
         from cameras.models import Camera
         try:
             camera = Camera.objects.get(id=camera_id)
@@ -82,7 +82,7 @@ class VideoService:
     
     @staticmethod
     def get_camera_snapshot(camera_id: int) -> Dict[str, Any]:
-        """Get snapshot from camera"""
+        """Получить снимок с камеры"""
         from cameras.models import Camera
         try:
             camera = Camera.objects.get(id=camera_id)
@@ -98,7 +98,7 @@ class VideoService:
     
     @staticmethod
     def get_video_file_download_info(video_file_id: int) -> Dict[str, Any]:
-        """Get download information for video file"""
+        """Получить информацию для скачивания видео файла"""
         try:
             video_file = VideoFile.objects.get(id=video_file_id)
             result = {
@@ -113,7 +113,7 @@ class VideoService:
     
     @staticmethod
     def get_clip_download_info(clip_id: int) -> Dict[str, Any]:
-        """Get download information for clip"""
+        """Получить информацию для скачивания клипа"""
         try:
             clip = Clip.objects.get(id=clip_id)
             result = {

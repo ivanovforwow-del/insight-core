@@ -46,8 +46,8 @@ const Alerts = () => {
     queryFn: async () => [
       {
         id: 1,
-        title: 'High Severity Alert',
-        message: 'Motion detected in restricted area',
+        title: 'Высокий уровень оповещения',
+        message: 'Обнаружено движение в запретной зоне',
         type: 'error',
         timestamp: '2023-12-01 10:30:15',
         read: false,
@@ -55,8 +55,8 @@ const Alerts = () => {
       },
       {
         id: 2,
-        title: 'Camera Offline',
-        message: 'Camera "Entrance Cam 1" is offline',
+        title: 'Камера отключена',
+        message: 'Камера "Камера 1 (вход)" отключена',
         type: 'warning',
         timestamp: '2023-12-01 10:28:42',
         read: true,
@@ -64,8 +64,8 @@ const Alerts = () => {
       },
       {
         id: 3,
-        title: 'System Maintenance',
-        message: 'Scheduled maintenance in 2 hours',
+        title: 'Техническое обслуживание',
+        message: 'Плановое техническое обслуживание через 2 часа',
         type: 'info',
         timestamp: '2023-12-01 10:25:33',
         read: false,
@@ -73,8 +73,8 @@ const Alerts = () => {
       },
       {
         id: 4,
-        title: 'Low Severity Alert',
-        message: 'Unusual activity detected',
+        title: 'Низкий уровень оповещения',
+        message: 'Обнаружена необычная активность',
         type: 'warning',
         timestamp: '2023-12-01 10:22:18',
         read: false,
@@ -82,8 +82,8 @@ const Alerts = () => {
       },
       {
         id: 5,
-        title: 'Critical Alert',
-        message: 'Multiple cameras offline',
+        title: 'Критическое оповещение',
+        message: 'Несколько камер отключены',
         type: 'error',
         timestamp: '2023-12-01 10:20:05',
         read: true,
@@ -113,7 +113,7 @@ const Alerts = () => {
       queryClient.invalidateQueries({ queryKey: ['alerts'] });
       notification.success({
         message: 'Успех',
-        description: 'Все оповещения очищены',
+        description: 'Все уведомления очищены',
       });
     },
   });
@@ -140,7 +140,7 @@ const Alerts = () => {
       sorter: (a: Alert, b: Alert) => a.id - b.id,
     },
     {
-      title: 'Заголовок',
+      title: 'Название',
       dataIndex: 'title',
       key: 'title',
       sorter: (a: Alert, b: Alert) => a.title.localeCompare(b.title),
@@ -180,7 +180,7 @@ const Alerts = () => {
       render: (_: any, record: Alert) => (
         <Badge
           status={record.read ? 'success' : 'error'}
-          text={record.read ? 'Read' : 'Unread'}
+          text={record.read ? 'Прочитано' : 'Непрочитано'}
         />
       ),
       filters: [
@@ -208,7 +208,7 @@ const Alerts = () => {
               onClick={() => markAsReadMutation.mutate(record.id)}
               loading={markAsReadMutation.isPending}
             >
-              Отметить прочитанным
+              Отметить как прочитанное
             </Button>
           )}
           <Button
@@ -243,8 +243,8 @@ const Alerts = () => {
 
   const handleClearAll = () => {
     Modal.confirm({
-      title: 'Clear All Alerts',
-      content: 'Вы уверены, что хотите очистить все оповещения?',
+      title: 'Очистить все уведомления',
+      content: 'Вы уверены, что хотите очистить все уведомления?',
       onOk: () => clearAllMutation.mutate(),
     });
   };
@@ -254,7 +254,7 @@ const Alerts = () => {
       <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
         <Col>
           <Title level={2}>
-            <AlertOutlined /> Оповещения
+            <AlertOutlined /> Уведомления
           </Title>
         </Col>
         <Col>
@@ -287,10 +287,10 @@ const Alerts = () => {
                 onChange={(value) => handleFilterChange({ type: value })}
                 allowClear
               >
-                <Option value="info">Info</Option>
-                <Option value="warning">Warning</Option>
-                <Option value="error">Error</Option>
-                <Option value="success">Success</Option>
+                <Option value="info">Информация</Option>
+                <Option value="warning">Предупреждение</Option>
+                <Option value="error">Ошибка</Option>
+                <Option value="success">Успех</Option>
               </Select>
             </Col>
             <Col span={8}>
@@ -300,13 +300,13 @@ const Alerts = () => {
                 onChange={(value) => handleFilterChange({ read: value })}
                 allowClear
               >
-                <Option value={true}>Read</Option>
-                <Option value={false}>Unread</Option>
+                <Option value={true}>Прочитано</Option>
+                <Option value={false}>Непрочитано</Option>
               </Select>
             </Col>
             <Col span={8}>
               <Input
-                placeholder="Поиск оповещений..."
+                placeholder="Поиск уведомлений..."
                 prefix={<SearchOutlined />}
                 onChange={(e) => handleFilterChange({ search: e.target.value })}
               />
@@ -327,12 +327,12 @@ const Alerts = () => {
       </Card>
 
       <Modal
-        title="Детали оповещения"
+        title="Детали уведомления"
         open={!!selectedAlert}
         onCancel={() => setSelectedAlert(null)}
         footer={[
           <Button key="close" onClick={() => setSelectedAlert(null)}>
-            Close
+            Закрыть
           </Button>,
         ]}
       >

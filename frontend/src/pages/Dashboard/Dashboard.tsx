@@ -34,21 +34,21 @@ const Dashboard = () => {
   const { data: recentEvents = [] } = useQuery<Event[]>({
     queryKey: ['recent-events'],
     queryFn: async () => [
-      { id: 1, cameraId: 1, cameraName: 'Entrance Cam 1', objectType: 'Person', timestamp: '2023-12-01 10:30:15', confidence: 0.95, severity: 'high' },
-      { id: 2, cameraId: 2, cameraName: 'Parking Cam 2', objectType: 'Car', timestamp: '2023-12-01 10:28:42', confidence: 0.87, severity: 'medium' },
-      { id: 3, cameraId: 3, cameraName: 'Gate Cam 3', objectType: 'Truck', timestamp: '2023-12-01 10:25:33', confidence: 0.92, severity: 'low' },
-      { id: 4, cameraId: 4, cameraName: 'Warehouse Cam 1', objectType: 'Person', timestamp: '2023-12-01 10:2:18', confidence: 0.89, severity: 'high' },
-      { id: 5, cameraId: 5, cameraName: 'Perimeter Cam 4', objectType: 'Vehicle', timestamp: '2023-12-01 10:20:05', confidence: 0.78, severity: 'medium' },
+      { id: 1, cameraId: 1, cameraName: 'Камера 1 (вход)', objectType: 'Человек', timestamp: '2023-12-01 10:30:15', confidence: 0.95, severity: 'high' },
+      { id: 2, cameraId: 2, cameraName: 'Камера 2 (парковка)', objectType: 'Автомобиль', timestamp: '2023-12-01 10:28:42', confidence: 0.87, severity: 'medium' },
+      { id: 3, cameraId: 3, cameraName: 'Камера 3 (ворота)', objectType: 'Грузовик', timestamp: '2023-12-01 10:25:33', confidence: 0.92, severity: 'low' },
+      { id: 4, cameraId: 4, cameraName: 'Камера 1 (склад)', objectType: 'Человек', timestamp: '2023-12-01 10:2:18', confidence: 0.89, severity: 'high' },
+      { id: 5, cameraId: 5, cameraName: 'Камера 4 (периметр)', objectType: 'Транспорт', timestamp: '2023-12-01 10:20:05', confidence: 0.78, severity: 'medium' },
     ],
   });
 
   // Mock events by type
  const eventsByType: EventByType[] = [
-    { name: 'Person', value: 56 },
-    { name: 'Vehicle', value: 32 },
-    { name: 'Car', value: 28 },
-    { name: 'Truck', value: 12 },
-    { name: 'Bicycle', value: 8 },
+    { name: 'Человек', value: 56 },
+    { name: 'Транспорт', value: 32 },
+    { name: 'Автомобиль', value: 28 },
+    { name: 'Грузовик', value: 12 },
+    { name: 'Велосипед', value: 8 },
   ];
 
   // Mock events by hour
@@ -105,10 +105,10 @@ const Dashboard = () => {
       key: 'objectType',
       render: (text: string) => (
         <Space>
-          {text === 'Person' && <UserOutlined />}
-          {text === 'Car' && <CarOutlined />}
-          {text === 'Truck' && <CarOutlined />}
-          {text === 'Vehicle' && <CarOutlined />}
+          {text === 'Человек' && <UserOutlined />}
+          {text === 'Автомобиль' && <CarOutlined />}
+          {text === 'Грузовик' && <CarOutlined />}
+          {text === 'Транспорт' && <CarOutlined />}
           {text}
         </Space>
       ),
@@ -150,7 +150,7 @@ const Dashboard = () => {
               title="Всего камер"
               value={stats?.totalCameras || 0}
               prefix={<VideoCameraOutlined />}
-              suffix={`/ ${stats?.activeCameras || 0} active`}
+              suffix={`/ ${stats?.activeCameras || 0} активных`}
             />
           </Card>
         </Col>
@@ -175,7 +175,7 @@ const Dashboard = () => {
         <Col span={6}>
           <Card>
             <Statistic
-              title="Оповещений сегодня"
+              title="Уведомлений сегодня"
               value={stats?.alertsToday || 0}
               prefix={<CheckCircleOutlined />}
             />

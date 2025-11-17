@@ -11,9 +11,9 @@ async function fetchCameras(): Promise<Camera[]> {
   return [
     {
       id: 1,
-      name: 'Entrance Cam 1',
+      name: 'Камера 1 (вход)',
       rtspUrl: 'rtsp://192.168.1.100:554/stream1',
-      location: 'Main Entrance',
+      location: 'Главный вход',
       status: 'active',
       vendor: 'Hikvision',
       streamSettings: {
@@ -27,9 +27,9 @@ async function fetchCameras(): Promise<Camera[]> {
     },
     {
       id: 2,
-      name: 'Parking Cam 2',
+      name: 'Камера 2 (парковка)',
       rtspUrl: 'rtsp://192.168.1.101:554/stream1',
-      location: 'Parking Area',
+      location: 'Парковочная зона',
       status: 'active',
       vendor: 'Dahua',
       streamSettings: {
@@ -43,9 +43,9 @@ async function fetchCameras(): Promise<Camera[]> {
     },
     {
       id: 3,
-      name: 'Gate Cam 3',
+      name: 'Камера 3 (ворота)',
       rtspUrl: 'rtsp://192.168.1.102:554/stream1',
-      location: 'Main Gate',
+      location: 'Главные ворота',
       status: 'inactive',
       vendor: 'Axis',
       streamSettings: {
@@ -59,9 +59,9 @@ async function fetchCameras(): Promise<Camera[]> {
     },
     {
       id: 4,
-      name: 'Warehouse Cam 1',
+      name: 'Камера 1 (склад)',
       rtspUrl: 'rtsp://192.168.1.103:554/stream1',
-      location: 'Warehouse',
+      location: 'Склад',
       status: 'error',
       vendor: 'Bosch',
       streamSettings: {
